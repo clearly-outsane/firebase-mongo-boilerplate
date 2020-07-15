@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> state/Store.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Firebase+Mongo boilerplate</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createNotification">createNotification</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#validationSchemaForSignUp">validationSchemaForSignUp</a></li></ul></div><div class="category"><h2>API</h2><h3>Modules</h3><ul><li><a href="module-Albums+Singles.html">Albums+Singles</a></li><li><a href="module-Singles.html">Singles</a></li><li><a href="module-User.html">User</a></li></ul></div><div class="category"><h2>Store</h2><h3>Modules</h3><ul><li><a href="module-Store.html">Store</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>state/Store.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The context store. The file where all state management stems from.
+ * @module Store
+ * @category Store
+ */
+
+import React, { createContext, useReducer, useEffect, useState } from "react";
+import { auth } from "../config/firebase";
+import Reducer from "./reducers";
+import { actionTypes } from "../state/constants";
+import { User, Singles, Albums } from "./api";
+import { routes } from "../constants";
+
+/**
+ * @param initialLoading - when the webpage loads - we check for any firebase users
+ * @param loading - to indicate loading of firebase and mongo users for every other
+ * request involving fetching users from either database - for example when a login
+ * or sign up form is submitted
+ */
+const initialState = {
+  messages: [],
+  user: null,
+  loading: true,
+  initialLoading: true,
+  waitSinglesSubmit: false,
+  formLoading: false,
+};
+
+/**
+ *
+ * @param {function} dispatch
+ * function required for async operations which
+ * must be abstracted away from the reducer
+ */
+function dispatchUserMiddleware(state, dispatch) {
+  return (action) => {
+    console.log(action);
+    switch (action.type) {
+      case actionTypes.CREATE_USER:
+        User.createUser(state, dispatch, action.payload.body, (user) => {
+          if (user &amp;&amp; user !== "handled") {
+            //If user was successfully created - send them a verification email
+
+            dispatch({ type: actionTypes.CREATE_USER, user });
+          } else if (user === "handled") console.log("Done Loading");
+          else dispatch({ type: actionTypes.SET_LOADING, payload: false });
+        });
+        break;
+
+      case actionTypes.LOGIN_USER:
+        User.signInUser(
+          action.payload.type,
+          state,
+          dispatch,
+          action.body,
+          (user) => {
+            if (user) dispatch({ type: actionTypes.LOGIN_USER, user });
+            else {
+              console.log("mongo user doesnt exists");
+              dispatch({ type: actionTypes.SET_LOADING, payload: false });
+            }
+          }
+        );
+        break;
+
+      case actionTypes.GET_MONGO_USER:
+        User.getUserbyId(state, dispatch, action.id, (user) => {
+          if (user) dispatch({ type: actionTypes.LOGIN_USER, user });
+          else dispatch({ type: actionTypes.SET_LOADING, payload: false });
+          dispatch({ type: actionTypes.SET_INITIAL_LOAD, payload: false });
+        });
+        break;
+
+      case actionTypes.SUBMIT_SINGLES:
+        dispatch({
+          type: actionTypes.WAIT_SINGLES_SUBMIT,
+          payload: true,
+        });
+        Singles.uploadSingle(state, dispatch, action.payload.body).then(
+          (single) => {
+            !!single
+              ? Singles.updateUser(state, dispatch, single._id).then((user) => {
+                  dispatch({ type: actionTypes.LOGIN_USER, user });
+                  dispatch({
+                    type: actionTypes.WAIT_SINGLES_SUBMIT,
+                    payload: false,
+                  });
+                  action.payload.cb();
+                })
+              : dispatch({
+                  type: actionTypes.WAIT_SINGLES_SUBMIT,
+                  payload: false,
+                });
+          }
+        );
+        break;
+
+      case actionTypes.SUBMIT_ALBUM:
+        dispatch({
+          type: actionTypes.WAIT_ALBUM_SUBMIT,
+          payload: true,
+        });
+        Albums.uploadAlbum(state, dispatch, action.payload.body).then(
+          (album) => {
+            !!album
+              ? Albums.updateUser(state, dispatch, album._id).then((user) => {
+                  dispatch({ type: actionTypes.LOGIN_USER, user });
+                  dispatch({
+                    type: actionTypes.WAIT_ALBUM_SUBMIT,
+                    payload: false,
+                  });
+                  action.payload.cb();
+                })
+              : dispatch({
+                  type: actionTypes.WAIT_ALBUM_SUBMIT,
+                  payload: false,
+                });
+          }
+        );
+        break;
+
+      case actionTypes.SEND_INVITE_EMAIL:
+        User.sendInviteEmail(state, dispatch, action.payload);
+        break;
+
+      default:
+        return dispatch(action);
+    }
+  };
+}
+
+const Store = ({ children }) => {
+  const [firebaseUser, setUser] = useState(null);
+
+  const [contextState, dispatch] = useReducer(Reducer, initialState);
+  const state = { ...contextState, firebaseUser };
+  const middleware = dispatchUserMiddleware(state, dispatch);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser);
+        console.log("Firebase user:", authUser, authUser.providerData);
+      } else {
+        console.log("No Firebase user");
+        setUser(null);
+        middleware({ type: actionTypes.SET_LOADING, payload: false });
+        middleware({ type: actionTypes.SET_INITIAL_LOAD, payload: false });
+      }
+    });
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    if (firebaseUser) {
+      if (!!state.user &amp;&amp; firebaseUser.email !== state.user.email) {
+        console.log("user changed");
+        middleware({ type: actionTypes.LOGOUT_USER });
+        middleware({ type: actionTypes.GET_MONGO_USER, id: firebaseUser.uid });
+      }
+      console.log("here", state);
+      if (state.initialLoading) {
+        middleware({ type: actionTypes.GET_MONGO_USER, id: firebaseUser.uid });
+      }
+    }
+  }, [firebaseUser]);
+
+  return (
+    &lt;Context.Provider value={[state, dispatchUserMiddleware(state, dispatch)]}>
+      {children}
+    &lt;/Context.Provider>
+  );
+};
+
+export const Context = createContext(initialState);
+export default { Store };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

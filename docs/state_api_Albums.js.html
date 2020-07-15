@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> state/api/Albums.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Firebase+Mongo boilerplate</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createNotification">createNotification</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#validationSchemaForSignUp">validationSchemaForSignUp</a></li></ul></div><div class="category"><h2>API</h2><h3>Modules</h3><ul><li><a href="module-Albums+Singles.html">Albums+Singles</a></li><li><a href="module-Singles.html">Singles</a></li><li><a href="module-User.html">User</a></li></ul></div><div class="category"><h2>Store</h2><h3>Modules</h3><ul><li><a href="module-Store.html">Store</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>state/api/Albums.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * API requests to mongo that handle uploading albums, updating user fields,
+ * fetching singles and albums along with their cover art.
+ *
+ * Fetching singles was done from this file as when an album is fetched - it's
+ * singles need to be fetched too and it was easier to have the entire logic in one file
+ * @module Albums+Singles
+ * @category API
+ */
+
+import axios from "axios";
+import React from "react";
+import { createNotification } from "../../utils/Messages";
+import { actionTypes } from "../constants";
+
+/**
+ *
+ * Sends a post request with Album form data. Album here refers to a music album.
+ * @param {Object} state Context state
+ * @param {Function} dispatch dispatch function returned by useReducer hook
+ * @param {Object} body form data
+ *
+ * @returns {Object} returns uploaded album object or null if something fails
+ */
+const uploadAlbum = async (state, dispatch, body) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:3000/api/v1/albums`,
+      body
+    );
+    console.log("response");
+    createNotification(state, dispatch, {
+      type: "success",
+      autoHide: true,
+      message: "Successfully uploaded",
+    });
+    return response.data;
+  } catch (e) {
+    console.log(e, e.response);
+    const errorMsg =
+      typeof e.response.data !== "undefined"
+        ? e.response.data.msg
+        : "Oops! Something went wrong";
+
+    createNotification(state, dispatch, {
+      type: "error",
+      autoHide: true,
+      message: &lt;div>{errorMsg}&lt;/div>,
+    });
+    return null;
+  }
+};
+
+/**
+ * Once a album has been uploaded it has to be associated the user that uploaded it.
+ * This function updates the mongo user {@link albums} array field to include the ID of the uploaded album.
+ * @param {Object} state Context state
+ * @param {Function} dispatch dispatch function returned by useReducer hook
+ * @param {Number} albumId
+ *
+ * @returns {Object} returns updated mongo user if all requests were successful
+ */
+const updateUser = async (state, dispatch, albumId) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:3000/api/v1/users/album/${state.firebaseUser.uid}/${albumId}`
+    );
+
+    return response.data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+/**
+ * Fetches a single given the singleId
+ * @param {Number} singleId
+ * @returns {Object} If the single document is found it is returned else null is returned
+ * @function getSingle
+ */
+export const getSingle = async (singleId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/singles/${singleId}`
+    );
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+/**
+ * Fetches an album given the albumId
+ * @param {Number} albumId
+ * @returns {Object} If the album document is found it is returned else null is returned
+ * @function getAlbum
+ */
+export const getAlbum = async (albumId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/albums/${albumId}`
+    );
+    return response.data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+/**
+ * Fetches the single cover art
+ * @param {Number} singleArtId
+ * @returns {String} base64 encoded data. null if request fails
+ * @function getSingleCoverArt
+ */
+export const getSingleCoverArt = async (singleArtId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/singles/albumart/${singleArtId}`
+    );
+
+    return response.data;
+  } catch (e) {
+    console.log(e, e.response);
+    return null;
+  }
+};
+
+/**
+ * Fetches the album cover art
+ * @param {Number} albumArtId
+ * @returns {String} base64 encoded data. null if request fails
+ * @function getAlbumCoverArt
+ */
+export const getAlbumCoverArt = async (albumArtId) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3000/api/v1/albums/albumart/${albumArtId}`
+    );
+
+    return response.data;
+  } catch (e) {
+    console.log(e, e.response);
+    return null;
+  }
+};
+
+/**
+ * Iterates over the user {@link singles} field and fetches each single along with it's cover art
+ * @param {Object} user user object stored in state which was fetched from mongo
+ * @returns {Array&lt;Object>} Array of single objects. Array is empty by default. If a request fails it isn't pushed into the array.
+ * @function getSingles
+ */
+export const getSingles = async (user) => {
+  let singlesArray = [];
+  for (var index in user.singles) {
+    console.log(user.singles[index]);
+    await getSingle(user.singles[index])
+      .then(async (s) => {
+        console.log(s);
+        await getSingleCoverArt(s.coverArt)
+          .then((res) => {
+            if (!!s) {
+              s.img = res;
+              s.releaseDate = new Date(s.releaseDate); //Converting to date object as only string is returned
+              singlesArray.push(s);
+            }
+          })
+          .catch((e) => {
+            console.log("unable to get cover art", e);
+          });
+      })
+      .catch((e) => console.log(e));
+  }
+  return singlesArray;
+};
+
+/**
+ * Iterates over the user {@link albums} field and fetches each album along with it's cover art
+ * @param {Object} user user object stored in state which was fetched from mongo
+ * @function getAlbums
+ */
+export const getAlbums = async (user) => {
+  let albumsArray = [];
+  for (var index in user.albums) {
+    console.log(user.albums[index]);
+    await getAlbum(user.albums[index])
+      .then(async (s) => {
+        console.log(s);
+        await getAlbumCoverArt(s.albumArt)
+          .then(async (res) => {
+            if (!!s) {
+              s.img = res;
+              s.releaseDate = new Date(s.releaseDate);
+              albumsArray.push(s);
+            }
+          })
+          .catch((e) => {
+            console.log("unable to get cover art", e);
+          });
+      })
+      .catch((e) => console.log(e));
+  }
+  return albumsArray;
+};
+
+export default { uploadAlbum, updateUser };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
