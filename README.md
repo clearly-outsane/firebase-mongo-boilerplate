@@ -4,6 +4,7 @@
 
 - [General info](#general-info)
 - [Technologies](#technologies)
+- [Folder Structure](#folder-structure)
 - [Pages and Features](#pages-and-features)
 - [Documentation](#documentation)
 - [Setup](#setup)
@@ -24,6 +25,34 @@ Project was made using:
 - react-icons
 - Firebase
 - Mongo
+
+## Folder Structure
+
+Brief file description and overview of how the app is organized.
+
+<pre>
+firebase-mongo-boilerplate
+│   README.md
+│   ...
+│
+└───src
+│   └───assets
+│   │   ├───imgs
+│   │   └───svgs
+│   ├───components
+│   │   ├───SelectComponents
+│   │   └───SignUpForm
+│   │   ...
+│   ├───config
+│   ├───constants
+│   ├───pages
+│   ├───state
+│   │   ├───api
+│   │   ├───constants
+│   │   └───reducers
+│   ├───styles
+│   └───utils
+</pre>
 
 ## Pages and Features
 
