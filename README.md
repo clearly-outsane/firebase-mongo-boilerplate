@@ -4,11 +4,12 @@
 
 - [General info](#general-info)
 - [Technologies](#technologies)
+- [Features](#features)
 - [Setup](#setup)
 
 ## General info
 
-A well designed react app for a record label. Supports complete Signup and Login authentication flows with support for email verification, password reset and inviting other users by email. Ensures that mongo and firebase are in sync at all times. Supports upload forms for Albums and Singles with necessary validation.
+A well designed React app for a record label using only functional components and hooks. State management is done entirely using the Context API and React hooks. Supports complete Signup and Login authentication flows. Authenticated users can access the dashboard and upload Albums and Singles. Ensures that mongo and firebase are in sync at all times.
 
 ## Technologies
 
@@ -23,6 +24,11 @@ Project was made using:
 - react-icons and material icons
 - Firebase
 - Mongo
+
+## Features
+
+- Beautiful material UI
+-
 
 ## Setup
 
