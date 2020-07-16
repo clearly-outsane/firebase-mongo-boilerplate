@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Store</title>
+  <title> Notifications</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -78,7 +78,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Module</p>
-                    <h1>Store</h1>
+                    <h1>Notifications</h1>
                 </header>
                 
 
@@ -99,8 +99,8 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>The Context store. The file where all state management stems from. Ideally
-any state mutation should originate from a dispatch call or a setState hook.</p></div>
+            <div class="description"><p>Global notification system. Showing and hiding notifications is as simple as calling <code>createNotification</code>
+and <code>dismissNotificationById</code> .</p></div>
         
 
         
@@ -152,9 +152,9 @@ any state mutation should originate from a dispatch call or a setState hook.</p>
 
     
         <p class="tag-source">
-            <a href="state_Store.js.html" class="button">View Source</a>
+            <a href="utils_Messages.js.html" class="button">View Source</a>
             <span>
-                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line1">line 1</a>
+                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line1">line 1</a>
             </span>
         </p>
     
@@ -208,8 +208,8 @@ any state mutation should originate from a dispatch call or a setState hook.</p>
 
 
     
-    <h4 class="name" id="~dispatchUserMiddleware">
-        <a class="href-link" href="#~dispatchUserMiddleware">#</a>
+    <h4 class="name" id="~createNotification">
+        <a class="href-link" href="#~createNotification">#</a>
         
             
                 <span class='tag'>inner</span>
@@ -217,19 +217,13 @@ any state mutation should originate from a dispatch call or a setState hook.</p>
         
         <span class="code-name">
             
-                dispatchUserMiddleware<span class="signature">(state, dispatch)</span><span class="type-signature"></span>
+                createNotification<span class="signature">(state, dispatch, notification)</span><span class="type-signature"> &rarr; {String}</span>
             
         </span>
     </h4>
     
 
     
-    
-    <div class="description">
-        <p>Creates a higher-order store that applies middleware to the dispatch method
-returned by useReducer hook.Created with the sole purpose of abstracting
-away any asynchronous logic from the reducer.</p>
-    </div>
     
 
 
@@ -272,7 +266,7 @@ away any asynchronous logic from the reducer.</p>
   <td class="type">
   
       
-<span class="param-type">Object</span>
+<span class="param-type">object</span>
 
 
   
@@ -307,7 +301,32 @@ away any asynchronous logic from the reducer.</p>
 
   
 
-  <td class="description last"><p>dispatch function returned by useReducer hook</p></td>
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>notification</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="module-Notifications.html#~Notification">module:Notifications~Notification</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
 </tr>
 
 
@@ -348,21 +367,14 @@ away any asynchronous logic from the reducer.</p>
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="module-Actions.html">module:Actions</a></li>
-        </ul>
-    </dd>
-    
 
     
 
     
         <p class="tag-source">
-            <a href="state_Store.js.html" class="button">View Source</a>
+            <a href="utils_Messages.js.html" class="button">View Source</a>
             <span>
-                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line58">line 58</a>
+                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line32">line 32</a>
             </span>
         </p>
     
@@ -393,169 +405,22 @@ away any asynchronous logic from the reducer.</p>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>dispatches an action with the payload received from an api request</p></div>
+    <div class='param-desc column is-7'><p>notification id which is generated as: <code>${notification.type}-${state.messages.length}</code></p></div>
     
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">String</span>
+
+
+    </div>
     
 </div>
 
                 
         </div>
     </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="~Store">
-        <a class="href-link" href="#~Store">#</a>
-        
-            
-                <span class='tag'>inner</span>
-            
-        
-        <span class="code-name">
-            
-                Store<span class="signature">(children)</span><span class="type-signature"></span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <p>The Context store.</p>
-<p>Higher order component which uses the Provider React component to wrap its
-descendants allowing consuming functional components to subscribe to context changes.
-All consumers that are descendants of a Provider will re-render whenever the Provider’s value prop changes.</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>children</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">ReactElement</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>Functional components that want to consume Context state and dispatch actions</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="state_Store.js.html" class="button">View Source</a>
-            <span>
-                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line163">line 163</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -581,11 +446,11 @@ All consumers that are descendants of a Provider will re-render whenever the Pro
 
     </span>
 
-<h4 class="name" id="~initialState">
-    <a class="href-link" href="#~initialState">#</a>
+<h4 class="name" id="~Notification">
+    <a class="href-link" href="#~Notification">#</a>
     
     <span class="code-name">
-        initialState
+        Notification
     </span>
     
 </h4>
@@ -594,11 +459,7 @@ All consumers that are descendants of a Provider will re-render whenever the Pro
 
 
 <div class="description">
-    <p>The initial state.</p>
-<p>Loading indicators are used so our app waits till the
-async requests are finished. This enables us to not only show the
-user loading indicators - but it also prevents us from prematurely executing any logic
-that relies on something to be loaded first.</p>
+    <p>Notification object used by createNotification</p>
 </div>
 
 
@@ -631,13 +492,16 @@ that relies on something to be loaded first.</p>
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>initialLoading</code></td>
+        <td class="name"><code>message</code></td>
     
 
     <td class="type">
     
         
-<span class="param-type">boolean</span>
+<span class="param-type">string</span>
+|
+
+<span class="param-type">JSX</span>
 
 
     
@@ -647,22 +511,20 @@ that relies on something to be loaded first.</p>
 
     
 
-    <td class="description last"><p><code>true</code> When the page first loads - firebase checks
-for any existing user session and accordingly fetches the mongo user. This is run only once
-when app is initially loaded. Further user related async operations are indicated by <code>initialState.loading</code></p></td>
+    <td class="description last"><p>The message to be displayed, can be JSX or just a string</p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>loading</code></td>
+        <td class="name"><code>type</code></td>
     
 
     <td class="type">
     
         
-<span class="param-type">boolean</span>
+<span class="param-type">string</span>
 
 
     
@@ -672,11 +534,12 @@ when app is initially loaded. Further user related async operations are indicate
 
     
 
-    <td class="description last"><p><code>false</code> Indicates loading of firebase and/or mongo users</p>
-<p>For example:</p>
+    <td class="description last"><p>Using material UI types:</p>
 <ul>
-<li>When a login or sign up form is submitted.</li>
-<li>If a user object needs to be updated.</li>
+<li>'error'</li>
+<li>'warning'</li>
+<li>'info'</li>
+<li>'success'</li>
 </ul></td>
 </tr>
 
@@ -684,13 +547,13 @@ when app is initially loaded. Further user related async operations are indicate
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>waitSinglesSubmit</code></td>
+        <td class="name"><code>isDismissible</code></td>
     
 
     <td class="type">
     
         
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
     
@@ -700,21 +563,20 @@ when app is initially loaded. Further user related async operations are indicate
 
     
 
-    <td class="description last"><p><code>false</code> Indicates loading when single/album forms
-are being uploaded</p></td>
+    <td class="description last"><p>notification shows a clickable dismiss button which hides the notification</p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>formLoading</code></td>
+        <td class="name"><code>autoHide</code></td>
     
 
     <td class="type">
     
         
-<span class="param-type">boolean</span>
+<span class="param-type">Boolean</span>
 
 
     
@@ -724,77 +586,7 @@ are being uploaded</p></td>
 
     
 
-    <td class="description last"><p><code>false</code> Indicates loading on other miscellaneous forms
-such as password reset forms</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>messages</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">Array.&lt;Objects></span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>Consists of notifications to be displayed to the user</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>user</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type"><a href="global.html#userObject">userObject</a></span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>mongo user object</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>firebaseUser</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">Object</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>firebase user object</p></td>
+    <td class="description last"><p>if true autoHide hides after 3.5s</p></td>
 </tr>
 
         
@@ -837,9 +629,9 @@ such as password reset forms</p></td>
 
     
         <p class="tag-source">
-            <a href="state_Store.js.html" class="button">View Source</a>
+            <a href="utils_Messages.js.html" class="button">View Source</a>
             <span>
-                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line15">line 15</a>
+                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line20">line 20</a>
             </span>
         </p>
     

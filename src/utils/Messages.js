@@ -1,3 +1,11 @@
+/**
+ * Global notification system. Showing and hiding notifications is as simple as calling `createNotification`
+ * and `dismissNotificationById` . Notifications are assigned IDs which are generated and returned when `createNotification`
+ * is called.
+ * @module Notifications
+ * @category Features
+ */
+
 import React, { useEffect, useState, useContext } from "react";
 import { Context } from "../state/Store";
 import { routes } from "../constants";
@@ -11,12 +19,27 @@ function Alert(props) {
 }
 
 /**
+ * Notification object used by createNotification
+ * @typedef {Object} Notification
+ * @property {(string|JSX)} message - The message to be displayed, can be JSX or just a string
+ * @property {string} type - Using material UI types:
+ * - 'error'
+ * - 'warning'
+ * - 'info'
+ * - 'success'
+ * @property {Boolean} isDismissible - If true, notification shows a clickable dismiss button which hides the notification
+ * @property {Boolean} autoHide - If true autoHide hides after 3.5s
+ */
+
+/**
  *
  * @param {object} state - Context state
- * @param {function} dispatch
- * @param {{message,type,isDismissible,autoHide }} notification - autoHide hides after 3.5s
+ * @param {function} dispatch -  dispatch function received from Context
+ * @param {module:Notifications~Notification} notification
  *
- * @returns notification id which is `${type}-${state.messages.length}`
+ * @returns {String} notification id which is generated as: `${notification.type}-${state.messages.length}`
+ *
+ * @function createNotification
  */
 export const createNotification = (state, dispatch, notification) => {
   const notifId = `${notification.type}-${state.messages.length}`;
@@ -27,12 +50,20 @@ export const createNotification = (state, dispatch, notification) => {
   return notifId;
 };
 
+/**
+ * Removes notification with matching id from `state.messages`
+ * @param {Function} dispatch dispatch function received from Context
+ * @param {String} id id of notification to be hidden
+ *
+ * @function dismissNotificationById
+ */
 export const dismissNotificationById = (dispatch, id) => {
   dispatch({ type: actionTypes.DISMISS_NOTIFICATION, payload: id });
 };
 
 const RenderMessages = () => {
   const [state, dispatch] = useContext(Context);
+  //local state holding state.messages
   const [m, setM] = useState([
     { id: 1, message: "", type: "info", isDismissible: true },
   ]);
@@ -51,6 +82,7 @@ const RenderMessages = () => {
   const RenderMessages = () => {
     var messagesToRender = [];
     m.map((message) => {
+      //position messages on screen based on their type
       const vertical =
         message.type === "error" || message.type === "warning"
           ? "top"

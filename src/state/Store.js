@@ -53,7 +53,7 @@ const initialState = {
  * @param {Function} dispatch dispatch function returned by useReducer hook
  * @returns dispatches an action with the payload received from an api request
  *
- * @see Actions
+ * @see module:Actions
  */
 function dispatchUserMiddleware(state, dispatch) {
   return (action) => {

@@ -28,7 +28,7 @@ Project was made using:
 ## Features
 
 - Beautiful material UI
--
+- Global Notification system
 
 ## Setup
 
