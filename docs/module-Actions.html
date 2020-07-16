@@ -264,7 +264,7 @@ fetches firebase and mongo user objects - passes through <code>middleware</code>
 
     
 
-    <td class="description last"></td>
+    <td class="description last"><p><code>payload: Notification</code> - dispatched by createNotification in Message.js - avoid dispatching this action directly and only use functions in Message.js</p></td>
 </tr>
 
         
@@ -282,7 +282,7 @@ fetches firebase and mongo user objects - passes through <code>middleware</code>
 
     
 
-    <td class="description last"></td>
+    <td class="description last"><p><code>payload:id</code> - dispatched by dismissNotificationById in Message.js- avoid dispatching this action directly and only use functions in Message.js</p></td>
 </tr>
 
         
@@ -408,7 +408,7 @@ fetches firebase and mongo user objects - passes through <code>middleware</code>
 
     
 
-    <td class="description last"><p>payload : body:formData<code>- calls </code>Albums.uploadAlbum` - passes through <code>middleware</code></p></td>
+    <td class="description last"><p><code>payload : body:formData</code> - calls  <code>Albums.uploadAlbum</code> - passes through <code>middleware</code></p></td>
 </tr>
 
         
@@ -522,6 +522,8 @@ fetches firebase and mongo user objects - passes through <code>middleware</code>
     <dd class="tag-see">
         <ul>
             <li><a href="global.html#userObject">userObject</a></li>
+        
+            <li><a href="module-Notifications.html#~Notification">module:Notifications~Notification</a></li>
         </ul>
     </dd>
     
