@@ -108,23 +108,22 @@
 <h2>Table of contents</h2>
 <ul>
 <li><a href="#general-info">General info</a></li>
-<li><a href="#technologies">Technologies</a></li>
+<li><a href="#built-with">Built With</a></li>
 <li><a href="#folder-structure">Folder Structure</a></li>
 <li><a href="#pages-and-features">Pages and Features</a></li>
 <li><a href="#documentation">Documentation</a></li>
 <li><a href="#setup">Setup</a></li>
 </ul>
 <h2>General info</h2>
-<p>A well designed React app for a record label using only functional components and hooks. State management is done entirely using the Context API and React hooks. Supports complete Signup and Login authentication flows. Authenticated users can access the dashboard and upload Albums and Singles. Ensures that mongo and firebase are in sync at all times.</p>
-<h2>Technologies</h2>
-<p>Project was made using:</p>
+<p>A well designed React app themed for a record label using only functional components and hooks. State management is done entirely using the Context API and React hooks. Supports complete Signup and Login authentication flows. Authenticated users can access the dashboard and upload Albums and Singles. Ensures that mongo and firebase are in sync at all times.</p>
+<h2>Built With</h2>
 <ul>
-<li>React</li>
-<li>Material UI</li>
-<li>Formik with Yup validation</li>
-<li>music-metadata-browser for music file validation</li>
-<li>axios</li>
-<li>react-icons</li>
+<li>React - The web framework used</li>
+<li><a href="https://material-ui.com/">Material UI</a> - React UI framework</li>
+<li><a href="https://github.com/formium/formik">Formik</a> with <a href="https://github.com/jquense/yup">Yup</a> validation - For building forms</li>
+<li><a href="https://github.com/Borewit/music-metadata-browser">music-metadata-browser</a> - metadata parser used for music file validation</li>
+<li><a href="https://github.com/axios/axios">axios</a> - Promise based HTTP client</li>
+<li><a href="https://github.com/react-icons/react-icons">React icons</a> - Popular icon pack</li>
 <li>Firebase</li>
 <li>Mongo</li>
 </ul>
@@ -140,18 +139,67 @@ firebase-mongo-boilerplate
 │   │   ├───imgs
 │   │   └───svgs
 │   ├───components
-│   │   ├───SelectComponents
-│   │   └───SignUpForm
 │   ├───config
 │   ├───constants
 │   ├───pages
 │   ├───state
 │   │   ├───api
 │   │   ├───constants
-│   │   └───reducers
+│   │   ├───reducers
+│   │   └───Store.js
 │   ├───styles
 │   └───utils
 </pre>
+<table>
+<thead>
+<tr>
+<th>Folder</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>assets</td>
+<td>Material needed for the project such as images and svgs</td>
+</tr>
+<tr>
+<td>components</td>
+<td>React components that are reusable</td>
+</tr>
+<tr>
+<td>config</td>
+<td>Services such as firebase have config defined here. The rest of the app imports those services (such as firebase auth) from here</td>
+</tr>
+<tr>
+<td>constants</td>
+<td>Files that contain constants such as route names, form schemas - things that have a fixed value</td>
+</tr>
+<tr>
+<td>pages</td>
+<td>Contains pages. Ideally a page is something that only contains imports and UI while logic is abstracted to components and to the store. Each route displays a page.</td>
+</tr>
+<tr>
+<td>state</td>
+<td>Everything related to state management is housed here. Store.js contains the Context store .</td>
+</tr>
+<tr>
+<td>state/api</td>
+<td>Functions that handle async tasks by interacting with firebase and mongo</td>
+</tr>
+<tr>
+<td>state/constants</td>
+<td>Constants related to the state such as action types</td>
+</tr>
+<tr>
+<td>styles</td>
+<td>Files related to styling such as CSS files and Material UI theme providers</td>
+</tr>
+<tr>
+<td>utils</td>
+<td>Extra features for the app that improve user experience. Currently only contains logic for the global notification system.</td>
+</tr>
+</tbody>
+</table>
 <h2>Pages and Features</h2>
 <ul>
 <li>Beautiful material UI</li>
