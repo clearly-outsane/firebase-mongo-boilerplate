@@ -144,7 +144,7 @@ const getUserbyId = async (state, dispatch, userId, cb) => {
 /**
  *
  * @global
- * @typedef {Object} userObject
+ * @typedef {Object} userObject Mongo user object - stored as `state.user`
  * @property {Number} uid same as firebase userId
  * @property {String} firstName
  * @property {String} lastName
