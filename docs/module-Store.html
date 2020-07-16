@@ -53,7 +53,7 @@
                     href="index.html"
                     class="link"
                 >
-                    API Documentation
+                    README
                 </a>
                 
                 
@@ -70,7 +70,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createNotification">createNotification</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#validationSchemaForSignUp">validationSchemaForSignUp</a></li></ul></div><div class="category"><h2>API</h2><h3>Modules</h3><ul><li><a href="module-Albums+Singles.html">Albums+Singles</a></li><li><a href="module-Singles.html">Singles</a></li><li><a href="module-User.html">User</a></li></ul></div><div class="category"><h2>Store</h2><h3>Modules</h3><ul><li><a href="module-Store.html">Store</a></li></ul></div>
+                    <h2><a href="index.html">Home</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createNotification">createNotification</a></li></ul></div><div class="category"><h2>API</h2><h3>Modules</h3><ul><li><a href="module-Albums+Singles.html">Albums+Singles</a></li><li><a href="module-Singles.html">Singles</a></li><li><a href="module-User.html">User</a></li></ul></div><div class="category"><h2>Store</h2><h3>Modules</h3><ul><li><a href="module-Actions.html">Actions</a></li><li><a href="module-Store.html">Store</a></li></ul></div>
                 
             </nav>
         </div>
@@ -99,7 +99,8 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>The context store. The file where all state management stems from.</p></div>
+            <div class="description"><p>The Context store. The file where all state management stems from. Ideally
+any state mutation should originate from a dispatch call or a setState hook.</p></div>
         
 
         
@@ -197,84 +198,6 @@
     
 
     
-        <div class='vertical-section'>
-            <h1>Members</h1>
-            <div class="members">
-            
-                <div class="member">
-
-<h4 class="name" id="~initialState">
-    <a class="href-link" href="#~initialState">#</a>
-    
-        
-            <span class='tag'>inner</span>
-        
-            <span class='tag'>constant</span>
-        
-    
-    <span class="code-name">
-        initialState
-    </span>
-    
-</h4>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="state_Store.js.html" class="button">View Source</a>
-            <span>
-                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line20">line 20</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
 
     
         <div class='vertical-section'>
@@ -294,13 +217,19 @@
         
         <span class="code-name">
             
-                dispatchUserMiddleware<span class="signature">(dispatch)</span><span class="type-signature"></span>
+                dispatchUserMiddleware<span class="signature">(state, dispatch)</span><span class="type-signature"></span>
             
         </span>
     </h4>
     
 
     
+    
+    <div class="description">
+        <p>Creates a higher-order store that applies middleware to the dispatch method
+returned by useReducer hook.Created with the sole purpose of abstracting
+away any asynchronous logic from the reducer.</p>
+    </div>
     
 
 
@@ -337,6 +266,31 @@
             
 <tr class="deep-level-0">
   
+      <td class="name"><code>state</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Context state</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
       <td class="name"><code>dispatch</code></td>
   
 
@@ -353,8 +307,186 @@
 
   
 
-  <td class="description last"><p>function required for async operations which
-must be abstracted away from the reducer</p></td>
+  <td class="description last"><p>dispatch function returned by useReducer hook</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>Actions</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="state_Store.js.html" class="button">View Source</a>
+            <span>
+                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line58">line 58</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>dispatches an action with the payload received from an api request</p></div>
+    
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~Store">
+        <a class="href-link" href="#~Store">#</a>
+        
+            
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                Store<span class="signature">(children)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>The Context store.</p>
+<p>Higher order component which uses the Provider React component to wrap its
+descendants allowing consuming functional components to subscribe to context changes.
+All consumers that are descendants of a Provider will re-render whenever the Provider’s value prop changes.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>children</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">ReactElement</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Functional components that want to consume Context state and dispatch actions</p></td>
 </tr>
 
 
@@ -402,7 +534,7 @@ must be abstracted away from the reducer</p></td>
         <p class="tag-source">
             <a href="state_Store.js.html" class="button">View Source</a>
             <span>
-                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line35">line 35</a>
+                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line163">line 163</a>
             </span>
         </p>
     
@@ -434,6 +566,293 @@ must be abstracted away from the reducer</p></td>
         </div>
     
 
+    
+        <div class='vertical-section'>
+            <h1>Type Definitions</h1>
+            <div class="members">
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type">Object</span>
+
+
+    </span>
+
+<h4 class="name" id="~initialState">
+    <a class="href-link" href="#~initialState">#</a>
+    
+    <span class="code-name">
+        initialState
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>The initial state.</p>
+<p>Loading indicators are used so our app waits till the
+async requests are finished. This enables us to not only show the
+user loading indicators - but it also prevents us from prematurely executing any logic
+that relies on something to be loaded first.</p>
+</div>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+<div class="table-container">
+    <table class="props table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>initialLoading</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">boolean</span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p><code>true</code> When the page first loads - firebase checks
+for any existing user session and accordingly fetches the mongo user. This is run only once
+when app is initially loaded. Further user related async operations are indicated by <code>initialState.loading</code></p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>loading</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">boolean</span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p><code>false</code> Indicates loading of firebase and/or mongo users</p>
+<p>For example:</p>
+<ul>
+<li>When a login or sign up form is submitted.</li>
+<li>If a user object needs to be updated.</li>
+</ul></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>waitSinglesSubmit</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">boolean</span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p><code>false</code> Indicates loading when single/album forms
+are being uploaded</p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>formLoading</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">boolean</span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p><code>false</code> Indicates loading on other miscellaneous forms
+such as password reset forms</p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>messages</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">Array.&lt;Objects></span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p>Consists of notifications to be displayed to the user</p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>user</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type"><a href="global.html#userObject">userObject</a></span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p>mongo user object</p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>firebaseUser</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">Object</span>
+
+
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p>firebase user object</p></td>
+</tr>
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="state_Store.js.html" class="button">View Source</a>
+            <span>
+                <a href="state_Store.js.html">state/Store.js</a>, <a href="state_Store.js.html#line15">line 15</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
     
 
     

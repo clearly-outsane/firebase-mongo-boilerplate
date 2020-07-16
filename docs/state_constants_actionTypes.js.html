@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> config/firebase.js</title>
+  <title> state/constants/actionTypes.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -72,7 +72,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Home</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createNotification">createNotification</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li></ul></div><div class="category"><h2>API</h2><h3>Modules</h3><ul><li><a href="module-Albums+Singles.html">Albums+Singles</a></li><li><a href="module-Singles.html">Singles</a></li><li><a href="module-User.html">User</a></li></ul></div><div class="category"><h2>Store</h2><h3>Modules</h3><ul><li><a href="module-Actions.html">Actions</a></li><li><a href="module-Store.html">Store</a></li></ul></div>
+                    <h2><a href="index.html">Home</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createNotification">createNotification</a></li></ul></div><div class="category"><h2>API</h2><h3>Modules</h3><ul><li><a href="module-Albums+Singles.html">Albums+Singles</a></li><li><a href="module-Singles.html">Singles</a></li><li><a href="module-User.html">User</a></li></ul></div><div class="category"><h2>Store</h2><h3>Modules</h3><ul><li><a href="module-Actions.html">Actions</a></li><li><a href="module-Store.html">Store</a></li></ul></div>
                 
             </nav>
         </div>
@@ -80,7 +80,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>config/firebase.js</h1>
+                    <h1>state/constants/actionTypes.js</h1>
                 </header>
                 
 
@@ -89,52 +89,60 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+            <pre class="prettyprint source linenums"><code>/**
+ * @module Actions
+ * @category Store
+ */
 
 /**
- * TODO - use env variables ,but not important
- * as env variables will be replaced during build
- * and anyone can see it in the client side code
+ *
+ * @typedef {Object} Actions Actions types and their purpose
+ *
+ * NOTE - middleware here refers to dispatchUserMiddleware in Store
+ * @property {} UPDATE_FIREBASE_USER - TODO;
+ * @property {} GET_MONGO_USER - `payload: {id:String} `- used to fetch mongo user by id - passes through {@link middleware}
+ * @property {} CREATE_USER -  `payload: {body:userObject} `- calls User.createUser - passes through {@link middleware}
+ * @property {} LOGIN_USER -  `payload: {type:String,body:{email,password}}` -
+ * fetches firebase and mongo user objects - passes through {@link middleware}
+ * @property {} CREATE_NOTIFICATION
+ * @property {} DISMISS_NOTIFICATION
+ * @property {} SET_LOADING - `payload : Boolean`- sets `state.loading`
+ * @property {} SET_INITIAL_LOAD  - `payload : Boolean`- sets `state.initialLoading`
+ * @property {} LOGOUT_USER - Logs out firebase user and sets all user objects and any related user data (such as uploaded singles) to null
+ * @property {} WAIT_SINGLES_SUBMIT - `payload : Boolean`- sets `state.waitSinglesSubmit`
+ * @property {} WAIT_ALBUM_SUBMIT - `payload : Boolean`- sets `state.waitSinglesSubmit` //TODO - Seperate this into waitAlbumSubmit
+ * @property {} SUBMIT_SINGLES - `payload : body:formData` - calls `Singles.uploadSingle` - passes through {@link middleware}
+ * @property {} SUBMIT_ALBUM  - payload : body:formData` - calls  `Albums.uploadAlbum` - passes through {@link middleware}
+ * @property {} FORM_LOADING - `payload : Boolean`- sets `state.formLoading`
+ * @property {} SEND_INVITE_EMAIL - `payload : email` - calls  `User.sendInviteEmail` - passes through {@link middleware}
+ * @property {} SET_USER_SINGLES - `payload : Array&lt;Objects>` - stores fetched Singles uploaded by the user in `state.singlesArray`
+ * @property {} SET_USER_ALBUMS - `payload : Array&lt;Objects>` - stores fetched Albums uploaded by the user in `state.albumsArray`
+ *
+ * @see userObject
+ *
  */
-const firebaseConfig = {
-  apiKey: "AIzaSyBGoLb_ns1TLOOuwa2FuhobO5rdJi8aQeA",
-  authDomain: "website-cf1d6.firebaseapp.com",
-  databaseURL: "https://website-cf1d6.firebaseio.com",
-  projectId: "website-cf1d6",
-  storageBucket: "website-cf1d6.appspot.com",
-  messagingSenderId: "351562932165",
-  appId: "1:351562932165:web:8d269c10a2907a0251b5ac",
-  measurementId: "G-N7TTPGFWV0",
+
+const actions = {
+  UPDATE_FIREBASE_USER: "UPDATE_FIREBASE_USER",
+  GET_MONGO_USER: "GET_MONGO_USER",
+  CREATE_USER: "CREATE_USER",
+  LOGIN_USER: "LOGIN_USER",
+  CREATE_NOTIFICATION: "CREATE_NOTIFICATION",
+  DISMISS_NOTIFICATION: "DISMISS_NOTIFICATION",
+  SET_LOADING: "SET_LOADING",
+  SET_INITIAL_LOAD: "SET_INITIAL_LOAD",
+  LOGOUT_USER: "LOGOUT_USER",
+  WAIT_SINGLES_SUBMIT: "WAIT_SINGLES_SUBMIT",
+  SUBMIT_SINGLES: "SUBMIT_SINGLES",
+  SUBMIT_ALBUM: "SUBMIT_ALBUM",
+  WAIT_ALBUM_SUBMIT: "WAIT_ALBUM_SUBMIT",
+  FORM_LOADING: "FORM_LOADING",
+  SEND_INVITE_EMAIL: "SEND_INVITE_EMAIL",
+  SET_USER_SINGLES: "SET_USER_SINGLES",
+  SET_USER_ALBUMS: "SET_USER_ALBUMS",
 };
 
-firebase.initializeApp(firebaseConfig);
-firebase.auth().useDeviceLanguage(); //Sets language to browser default
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-
-export const googleProvider = new firebase.auth.GoogleAuthProvider();
-export const facebookProvider = new firebase.auth.FacebookAuthProvider();
-
-/**
- * TODO - handle user logging in through another sign in
- * method when their email already exists for another
- * auth provider
- *
- * Example - user logs in through facebook after already signing
- * up through gmail using the same email
- */
-
-/**
- * REFER HERE https://firebase.google.com/docs/auth/web/google-signin
- * https://firebase.google.com/docs/auth/web/account-linking
- */
-
-/**
- * add passwordless login
- * https://firebase.google.com/docs/auth/web/email-link-auth
- */
+export default actions;
 </code></pre>
         </article>
     </section>

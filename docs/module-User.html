@@ -53,7 +53,7 @@
                     href="index.html"
                     class="link"
                 >
-                    API Documentation
+                    README
                 </a>
                 
                 
@@ -70,7 +70,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createNotification">createNotification</a></li><li><a href="global.html#firebaseConfig">firebaseConfig</a></li><li><a href="global.html#validationSchemaForSignUp">validationSchemaForSignUp</a></li></ul></div><div class="category"><h2>API</h2><h3>Modules</h3><ul><li><a href="module-Albums+Singles.html">Albums+Singles</a></li><li><a href="module-Singles.html">Singles</a></li><li><a href="module-User.html">User</a></li></ul></div><div class="category"><h2>Store</h2><h3>Modules</h3><ul><li><a href="module-Store.html">Store</a></li></ul></div>
+                    <h2><a href="index.html">Home</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createNotification">createNotification</a></li></ul></div><div class="category"><h2>API</h2><h3>Modules</h3><ul><li><a href="module-Albums+Singles.html">Albums+Singles</a></li><li><a href="module-Singles.html">Singles</a></li><li><a href="module-User.html">User</a></li></ul></div><div class="category"><h2>Store</h2><h3>Modules</h3><ul><li><a href="module-Actions.html">Actions</a></li><li><a href="module-Store.html">Store</a></li></ul></div>
                 
             </nav>
         </div>
@@ -354,7 +354,7 @@ Handles firebase user deletion if user creation fails in mongo.</p>
         <p class="tag-source">
             <a href="state_api_User.js.html" class="button">View Source</a>
             <span>
-                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line180">line 180</a>
+                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line182">line 182</a>
             </span>
         </p>
     
@@ -406,11 +406,12 @@ Handles firebase user deletion if user creation fails in mongo.</p>
     <div class="description">
         <p>Main function used for email sign up.
 It creates a firebase email user first, then creates a mongo user
-using the object passed in as parameter named {body}. Once the user
-is created in both databases, a verification email is sent. If mongo fails
+using the parameter <code>body</code>. Once the user is created in both
+databases, a verification email is sent. If mongo fails
 the user is deleted from firebase.</p>
-<p>NOTE- if body.uid is present - the function straight away creates a mongo
-user and skips any firebase api calls involving the user.</p>
+<p>NOTE- if <code>body.uid</code> is present - the function straight away creates a mongo
+user and skips any firebase api calls as we only need the
+firebase uid to create a mongo user and &quot;link&quot; it to firebase.</p>
     </div>
     
 
@@ -454,7 +455,7 @@ user and skips any firebase api calls involving the user.</p>
   <td class="type">
   
       
-<span class="param-type">userObject</span>
+<span class="param-type"><a href="global.html#userObject">userObject</a></span>
 
 
   
@@ -533,11 +534,11 @@ user and skips any firebase api calls involving the user.</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="module-User.html#~userObject">module:User~userObject</a></li>
+            <li><a href="global.html#userObject">userObject</a></li>
         
-            <li>createMongoUser</li>
+            <li><a href="module-User.html#~createMongoUser">module:User~createMongoUser</a></li>
         
-            <li>emailSignUp</li>
+            <li><a href="module-User.html#~emailSignUp">module:User~emailSignUp</a></li>
         </ul>
     </dd>
     
@@ -548,7 +549,7 @@ user and skips any firebase api calls involving the user.</p>
         <p class="tag-source">
             <a href="state_api_User.js.html" class="button">View Source</a>
             <span>
-                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line179">line 179</a>
+                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line181">line 181</a>
             </span>
         </p>
     
@@ -798,7 +799,7 @@ Once user is signed into firebase, the corresponding mongo user is fetched.
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>getUserbyId</li>
+            <li><a href="module-User.html#~getUserbyId">module:User~getUserbyId</a></li>
         </ul>
     </dd>
     
@@ -860,7 +861,7 @@ Once user is signed into firebase, the corresponding mongo user is fetched.
     
     <div class="description">
         <p>Email sign up using firebase. If successful <code>createMongoUser</code> is passed the user object
-reeceived as response.</p>
+received as response.</p>
     </div>
     
 
@@ -1058,7 +1059,7 @@ reeceived as response.</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>createMongoUser</li>
+            <li><a href="module-User.html#~createMongoUser">module:User~createMongoUser</a></li>
         </ul>
     </dd>
     
@@ -1500,7 +1501,7 @@ reeceived as response.</p>
         <p class="tag-source">
             <a href="state_api_User.js.html" class="button">View Source</a>
             <span>
-                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line306">line 306</a>
+                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line311">line 311</a>
             </span>
         </p>
     
@@ -1703,7 +1704,7 @@ and uses password sign-in</p>
         <p class="tag-source">
             <a href="state_api_User.js.html" class="button">View Source</a>
             <span>
-                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line249">line 249</a>
+                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line254">line 254</a>
             </span>
         </p>
     
@@ -1744,7 +1745,7 @@ and uses password sign-in</p>
         
         <span class="code-name">
             
-                signInUser<span class="signature">(body, cb)</span><span class="type-signature"></span>
+                signInUser<span class="signature">(state, dispatch, type, body, cb)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -1792,6 +1793,81 @@ Signs user into firebase and gets the user document from mongo</p>
             
 <tr class="deep-level-0">
   
+      <td class="name"><code>state</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>Context state</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dispatch</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>dispatch function returned by useReducer hook</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>type</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">String</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The type of login method used - email or google</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
       <td class="name"><code>body</code></td>
   
 
@@ -1833,7 +1909,7 @@ Signs user into firebase and gets the user document from mongo</p>
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>callback</p></td>
 </tr>
 
 
@@ -1877,11 +1953,11 @@ Signs user into firebase and gets the user document from mongo</p>
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li>signInWithGoogle</li>
+            <li><a href="module-User.html#~signInWithGoogle">module:User~signInWithGoogle</a></li>
         
-            <li>getUserbyId</li>
+            <li><a href="module-User.html#~getUserbyId">module:User~getUserbyId</a></li>
         
-            <li>emailSignIn</li>
+            <li><a href="module-User.html#~emailSignIn">module:User~emailSignIn</a></li>
         </ul>
     </dd>
     
@@ -1892,7 +1968,7 @@ Signs user into firebase and gets the user document from mongo</p>
         <p class="tag-source">
             <a href="state_api_User.js.html" class="button">View Source</a>
             <span>
-                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line237">line 237</a>
+                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line242">line 242</a>
             </span>
         </p>
     
@@ -2126,391 +2202,6 @@ Signs user into firebase and gets the user document from mongo</p>
         </div>
     
 
-    
-        <div class='vertical-section'>
-            <h1>Type Definitions</h1>
-            <div class="members">
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">Object</span>
-
-
-    </span>
-
-<h4 class="name" id="~userObject">
-    <a class="href-link" href="#~userObject">#</a>
-    
-    <span class="code-name">
-        userObject
-    </span>
-    
-</h4>
-
-
-
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-<div class="table-container">
-    <table class="props table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>uid</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">Number</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>same as firebase userId</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>firstName</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>lastName</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>email</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>unique</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>phoneNumber</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">Number</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>unique</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>address</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>state</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">Object</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>not to be confused with Context state</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>zipCode</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>country</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>profilePicture</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>url</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>singles</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">Array.&lt;Number></span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>array of singleIds</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>albums</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">Array.&lt;Number></span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>array of albumIds</p></td>
-</tr>
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="state_api_User.js.html" class="button">View Source</a>
-            <span>
-                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line144">line 144</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-            </div>
-        </div>
     
 
     

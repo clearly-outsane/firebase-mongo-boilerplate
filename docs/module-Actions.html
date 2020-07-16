@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Global</title>
+  <title> Actions</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,8 +77,8 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Title</p>
-                    <h1>Global</h1>
+                    <p>Module</p>
+                    <h1>Actions</h1>
                 </header>
                 
 
@@ -89,7 +89,6 @@
 
 <header>
     
-        <h2></h2>
         
     
 </header>
@@ -98,44 +97,6 @@
     <div class="container-overview">
     
         
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
 
         
     
@@ -153,82 +114,6 @@
 
     
 
-    
-        <div class='vertical-section'>
-            <h1>Members</h1>
-            <div class="members">
-            
-                <div class="member">
-
-<h4 class="name" id="createNotification">
-    <a class="href-link" href="#createNotification">#</a>
-    
-        
-            <span class='tag'>constant</span>
-        
-    
-    <span class="code-name">
-        createNotification
-    </span>
-    
-</h4>
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="utils_Messages.js.html" class="button">View Source</a>
-            <span>
-                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line21">line 21</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-            </div>
-        </div>
     
 
     
@@ -248,17 +133,22 @@
 
     </span>
 
-<h4 class="name" id="userObject">
-    <a class="href-link" href="#userObject">#</a>
+<h4 class="name" id="~Actions">
+    <a class="href-link" href="#~Actions">#</a>
     
     <span class="code-name">
-        userObject
+        Actions
     </span>
     
 </h4>
 
 
 
+
+<div class="description">
+    <p>Actions types and their purpose</p>
+<p>NOTE - middleware here refers to dispatchUserMiddleware in Store</p>
+</div>
 
 
 
@@ -290,15 +180,10 @@
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>uid</code></td>
+        <td class="name"><code>UPDATE_FIREBASE_USER</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">Number</span>
-
-
     
     </td>
 
@@ -306,22 +191,72 @@
 
     
 
-    <td class="description last"><p>same as firebase userId</p></td>
+    <td class="description last"><p>TODO;</p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>firstName</code></td>
+        <td class="name"><code>GET_MONGO_USER</code></td>
     
 
     <td class="type">
     
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p><code>payload: {id:String} </code>- used to fetch mongo user by id - passes through <code>middleware</code></p></td>
+</tr>
+
         
-<span class="param-type">String</span>
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>CREATE_USER</code></td>
+    
 
+    <td class="type">
+    
+    </td>
 
+    
+
+    
+
+    <td class="description last"><p><code>payload: {body:userObject} </code>- calls User.createUser - passes through <code>middleware</code></p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>LOGIN_USER</code></td>
+    
+
+    <td class="type">
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p><code>payload: {type:String,body:{email,password}}</code> -
+fetches firebase and mongo user objects - passes through <code>middleware</code></p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>CREATE_NOTIFICATION</code></td>
+    
+
+    <td class="type">
     
     </td>
 
@@ -336,15 +271,10 @@
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>lastName</code></td>
+        <td class="name"><code>DISMISS_NOTIFICATION</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
     
     </td>
 
@@ -359,15 +289,10 @@
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>email</code></td>
+        <td class="name"><code>SET_LOADING</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
     
     </td>
 
@@ -375,22 +300,17 @@
 
     
 
-    <td class="description last"><p>unique</p></td>
+    <td class="description last"><p><code>payload : Boolean</code>- sets <code>state.loading</code></p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>phoneNumber</code></td>
+        <td class="name"><code>SET_INITIAL_LOAD</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">Number</span>
-
-
     
     </td>
 
@@ -398,22 +318,17 @@
 
     
 
-    <td class="description last"><p>unique</p></td>
+    <td class="description last"><p><code>payload : Boolean</code>- sets <code>state.initialLoading</code></p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>address</code></td>
+        <td class="name"><code>LOGOUT_USER</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
     
     </td>
 
@@ -421,22 +336,17 @@
 
     
 
-    <td class="description last"></td>
+    <td class="description last"><p>Logs out firebase user and sets all user objects and any related user data (such as uploaded singles) to null</p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>state</code></td>
+        <td class="name"><code>WAIT_SINGLES_SUBMIT</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">Object</span>
-
-
     
     </td>
 
@@ -444,22 +354,17 @@
 
     
 
-    <td class="description last"><p>not to be confused with Context state</p></td>
+    <td class="description last"><p><code>payload : Boolean</code>- sets <code>state.waitSinglesSubmit</code></p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>zipCode</code></td>
+        <td class="name"><code>WAIT_ALBUM_SUBMIT</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
     
     </td>
 
@@ -467,22 +372,17 @@
 
     
 
-    <td class="description last"></td>
+    <td class="description last"><p><code>payload : Boolean</code>- sets <code>state.waitSinglesSubmit</code> //TODO - Seperate this into waitAlbumSubmit</p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>country</code></td>
+        <td class="name"><code>SUBMIT_SINGLES</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
     
     </td>
 
@@ -490,22 +390,17 @@
 
     
 
-    <td class="description last"></td>
+    <td class="description last"><p><code>payload : body:formData</code> - calls <code>Singles.uploadSingle</code> - passes through <code>middleware</code></p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>profilePicture</code></td>
+        <td class="name"><code>SUBMIT_ALBUM</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">String</span>
-
-
     
     </td>
 
@@ -513,22 +408,17 @@
 
     
 
-    <td class="description last"><p>url</p></td>
+    <td class="description last"><p>payload : body:formData<code>- calls </code>Albums.uploadAlbum` - passes through <code>middleware</code></p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>singles</code></td>
+        <td class="name"><code>FORM_LOADING</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">Array.&lt;Number></span>
-
-
     
     </td>
 
@@ -536,22 +426,17 @@
 
     
 
-    <td class="description last"><p>array of singleIds</p></td>
+    <td class="description last"><p><code>payload : Boolean</code>- sets <code>state.formLoading</code></p></td>
 </tr>
 
         
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>albums</code></td>
+        <td class="name"><code>SEND_INVITE_EMAIL</code></td>
     
 
     <td class="type">
-    
-        
-<span class="param-type">Array.&lt;Number></span>
-
-
     
     </td>
 
@@ -559,7 +444,43 @@
 
     
 
-    <td class="description last"><p>array of albumIds</p></td>
+    <td class="description last"><p><code>payload : email</code> - calls  <code>User.sendInviteEmail</code> - passes through <code>middleware</code></p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>SET_USER_SINGLES</code></td>
+    
+
+    <td class="type">
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p><code>payload : Array&lt;Objects&gt;</code> - stores fetched Singles uploaded by the user in <code>state.singlesArray</code></p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>SET_USER_ALBUMS</code></td>
+    
+
+    <td class="type">
+    
+    </td>
+
+    
+
+    
+
+    <td class="description last"><p><code>payload : Array&lt;Objects&gt;</code> - stores fetched Albums uploaded by the user in <code>state.albumsArray</code></p></td>
 </tr>
 
         
@@ -597,14 +518,21 @@
     
 
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="global.html#userObject">userObject</a></li>
+        </ul>
+    </dd>
+    
 
     
 
     
         <p class="tag-source">
-            <a href="state_api_User.js.html" class="button">View Source</a>
+            <a href="state_constants_actionTypes.js.html" class="button">View Source</a>
             <span>
-                <a href="state_api_User.js.html">state/api/User.js</a>, <a href="state_api_User.js.html#line144">line 144</a>
+                <a href="state_constants_actionTypes.js.html">state/constants/actionTypes.js</a>, <a href="state_constants_actionTypes.js.html#line6">line 6</a>
             </span>
         </p>
     

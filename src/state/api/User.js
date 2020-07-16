@@ -52,7 +52,7 @@ export const signInWithFacebook = () => {
  * @param {String} email
  * @param {String} password
  * @param {Function} getMongoUser see {@link getUserbyId}
- * @see getUserbyId
+ * @see module:User~getUserbyId
  * @function emailSignIn
  */
 export const emailSignIn = (state, dispatch, email, password, getMongoUser) => {
@@ -82,14 +82,14 @@ export const emailSignIn = (state, dispatch, email, password, getMongoUser) => {
 
 /**
  * Email sign up using firebase. If successful {@link createMongoUser} is passed the user object
- * reeceived as response.
+ * received as response.
  * @param {Object} state Context state
  * @param {Function} dispatch dispatch function returned by useReducer hook
  * @param {String} email
  * @param {String} password
  * @param {Function} createMongoUser callback function , see {@link createMongoUser}
  * @function emailSignUp
- * @see createMongoUser
+ * @see module:User~createMongoUser
  */
 export const emailSignUp = (
   state,
@@ -143,6 +143,7 @@ const getUserbyId = async (state, dispatch, userId, cb) => {
 
 /**
  *
+ * @global
  * @typedef {Object} userObject
  * @property {Number} uid same as firebase userId
  * @property {String} firstName
@@ -162,19 +163,20 @@ const getUserbyId = async (state, dispatch, userId, cb) => {
  *
  * Main function used for email sign up.
  * It creates a firebase email user first, then creates a mongo user
- * using the object passed in as parameter named {body}. Once the user
- * is created in both databases, a verification email is sent. If mongo fails
+ * using the parameter {@link body}. Once the user is created in both
+ * databases, a verification email is sent. If mongo fails
  * the user is deleted from firebase.
  *
- * NOTE- if body.uid is present - the function straight away creates a mongo
- * user and skips any firebase api calls involving the user.
+ * NOTE- if {@link body.uid} is present - the function straight away creates a mongo
+ * user and skips any firebase api calls as we only need the
+ * firebase uid to create a mongo user and "link" it to firebase.
  *
  *
  * @param {userObject} body
  * @param {function} cb After all requests are successfull the user object returned from mongo is passed to the callback. Null is passed if anything fails.
- * @see module:User~userObject
- * @see createMongoUser
- * @see emailSignUp
+ * @see userObject
+ * @see module:User~createMongoUser
+ * @see module:User~emailSignUp
  */
 const createUser = (state, dispatch, body, cb) => {
   /**
@@ -228,11 +230,14 @@ const createUser = (state, dispatch, body, cb) => {
 /**
  * Main function used to Sign in user.
  * Signs user into firebase and gets the user document from mongo
+ * @param {Object} state Context state
+ * @param {Function} dispatch dispatch function returned by useReducer hook
+ * @param {String} type The type of login method used - email or google
  * @param {{email,password}} body
- * @param {function} cb
- * @see signInWithGoogle
- * @see getUserbyId
- * @see emailSignIn
+ * @param {function} cb callback
+ * @see module:User~signInWithGoogle
+ * @see module:User~getUserbyId
+ * @see module:User~emailSignIn
  */
 const signInUser = (type = "email", state, dispatch, body, cb) => {
   const getMongoUser = async (uid) => {

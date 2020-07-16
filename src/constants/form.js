@@ -14,6 +14,7 @@ export const validationSchemaForLogin = Yup.object({
 });
 
 /**
+ * @ignore
  * TODO - add address validation
  */
 export const validationSchemaForSignUp = [

@@ -1,5 +1,6 @@
 /**
- * The context store. The file where all state management stems from.
+ * The Context store. The file where all state management stems from. Ideally
+ * any state mutation should originate from a dispatch call or a setState hook.
  * @module Store
  * @category Store
  */
@@ -12,10 +13,28 @@ import { User, Singles, Albums } from "./api";
 import { routes } from "../constants";
 
 /**
- * @param initialLoading - when the webpage loads - we check for any firebase users
- * @param loading - to indicate loading of firebase and mongo users for every other
- * request involving fetching users from either database - for example when a login
- * or sign up form is submitted
+ * The initial state.
+ *
+ * Loading indicators are used so our app waits till the
+ * async requests are finished. This enables us to not only show the
+ * user loading indicators - but it also prevents us from prematurely executing any logic
+ * that relies on something to be loaded first.
+ * @typedef {Object} initialState
+ * @property {boolean} initialLoading {@link true} When the page first loads - firebase checks
+ * for any existing user session and accordingly fetches the mongo user. This is run only once
+ * when app is initially loaded. Further user related async operations are indicated by `initialState.loading`
+ * @property {boolean} loading {@link false} Indicates loading of firebase and/or mongo users
+ *
+ * For example:
+ * - When a login or sign up form is submitted.
+ * - If a user object needs to be updated.
+ * @property {boolean} waitSinglesSubmit {@link false} Indicates loading when single/album forms
+ * are being uploaded
+ * @property {boolean} formLoading {@link false} Indicates loading on other miscellaneous forms
+ * such as password reset forms
+ * @property {Array<Objects>} messages Consists of notifications to be displayed to the user
+ * @property {userObject} user mongo user object
+ * @property {Object}  firebaseUser firebase user object
  */
 const initialState = {
   messages: [],
@@ -27,10 +46,14 @@ const initialState = {
 };
 
 /**
+ * Creates a higher-order store that applies middleware to the dispatch method
+ * returned by useReducer hook.Created with the sole purpose of abstracting
+ * away any asynchronous logic from the reducer.
+ * @param {Object} state Context state
+ * @param {Function} dispatch dispatch function returned by useReducer hook
+ * @returns dispatches an action with the payload received from an api request
  *
- * @param {function} dispatch
- * function required for async operations which
- * must be abstracted away from the reducer
+ * @see Actions
  */
 function dispatchUserMiddleware(state, dispatch) {
   return (action) => {
@@ -85,7 +108,7 @@ function dispatchUserMiddleware(state, dispatch) {
                     type: actionTypes.WAIT_SINGLES_SUBMIT,
                     payload: false,
                   });
-                  action.payload.cb();
+                  action.payload.cb(); //Redirect after everything is successful (cb is a redirect function)
                 })
               : dispatch({
                   type: actionTypes.WAIT_SINGLES_SUBMIT,
@@ -129,13 +152,21 @@ function dispatchUserMiddleware(state, dispatch) {
   };
 }
 
+/**
+ * The Context store.
+ *
+ * Higher order component which uses the Provider React component to wrap its
+ * descendants allowing consuming functional components to subscribe to context changes.
+ * All consumers that are descendants of a Provider will re-render whenever the Provider’s value prop changes.
+ * @param {ReactElement} children Functional components that want to consume Context state and dispatch actions
+ */
 const Store = ({ children }) => {
   const [firebaseUser, setUser] = useState(null);
 
   const [contextState, dispatch] = useReducer(Reducer, initialState);
   const state = { ...contextState, firebaseUser };
   const middleware = dispatchUserMiddleware(state, dispatch);
-
+  //Listens to changes in user auth state.
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
@@ -150,11 +181,12 @@ const Store = ({ children }) => {
     });
     return () => {};
   }, []);
-
+  //Listens to changes in firebase user and accordingly syncs the mongo user
   useEffect(() => {
     if (firebaseUser) {
       if (!!state.user && firebaseUser.email !== state.user.email) {
         console.log("user changed");
+        //If user and firebaseUser emails don't match - refetch them
         middleware({ type: actionTypes.LOGOUT_USER });
         middleware({ type: actionTypes.GET_MONGO_USER, id: firebaseUser.uid });
       }

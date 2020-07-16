@@ -3,6 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 /**
+ * @ignore
  * TODO - use env variables ,but not important
  * as env variables will be replaced during build
  * and anyone can see it in the client side code
