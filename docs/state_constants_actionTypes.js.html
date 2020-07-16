@@ -102,7 +102,7 @@
  * @property {} UPDATE_FIREBASE_USER - TODO;
  * @property {} GET_MONGO_USER - `payload: {id:String} `- used to fetch mongo user by id - passes through {@link middleware}
  * @property {} CREATE_USER -  `payload: {body:userObject} `- calls User.createUser - passes through {@link middleware}
- * @property {} LOGIN_USER -  `payload: {type:String,body:{email,password}}` -
+ * @property {} LOGIN_USER -  `payload: {type:String,body:{email,password}}` - calls User.signInUser -
  * fetches firebase and mongo user objects - passes through {@link middleware}
  * @property {} CREATE_NOTIFICATION
  * @property {} DISMISS_NOTIFICATION
