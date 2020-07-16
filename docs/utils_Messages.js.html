@@ -91,7 +91,8 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * Global notification system. Showing and hiding notifications is as simple as calling `createNotification`
- * and `dismissNotificationById` .
+ * and `dismissNotificationById` . Notifications are assigned IDs which are generated and returned when `createNotification`
+ * is called.
  * @module Notifications
  * @category Features
  */
@@ -117,13 +118,14 @@ function Alert(props) {
  * - 'warning'
  * - 'info'
  * - 'success'
- * @property {Boolean} isDismissible - notification shows a clickable dismiss button which hides the notification
- * @property {Boolean} autoHide - if true autoHide hides after 3.5s
+ * @property {Boolean} isDismissible - If true, notification shows a clickable dismiss button which hides the notification
+ * @property {Boolean} autoHide - If true autoHide hides after 3.5s
  */
+
 /**
  *
  * @param {object} state - Context state
- * @param {function} dispatch
+ * @param {function} dispatch -  dispatch function received from Context
  * @param {module:Notifications~Notification} notification
  *
  * @returns {String} notification id which is generated as: `${notification.type}-${state.messages.length}`
@@ -139,12 +141,20 @@ export const createNotification = (state, dispatch, notification) => {
   return notifId;
 };
 
+/**
+ * Removes notification with matching id from `state.messages`
+ * @param {Function} dispatch dispatch function received from Context
+ * @param {String} id id of notification to be hidden
+ *
+ * @function dismissNotificationById
+ */
 export const dismissNotificationById = (dispatch, id) => {
   dispatch({ type: actionTypes.DISMISS_NOTIFICATION, payload: id });
 };
 
 const RenderMessages = () => {
   const [state, dispatch] = useContext(Context);
+  //local state holding state.messages
   const [m, setM] = useState([
     { id: 1, message: "", type: "info", isDismissible: true },
   ]);
@@ -163,6 +173,7 @@ const RenderMessages = () => {
   const RenderMessages = () => {
     var messagesToRender = [];
     m.map((message) => {
+      //position messages on screen based on their type
       const vertical =
         message.type === "error" || message.type === "warning"
           ? "top"

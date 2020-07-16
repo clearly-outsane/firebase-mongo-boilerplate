@@ -100,7 +100,8 @@
     
         
             <div class="description"><p>Global notification system. Showing and hiding notifications is as simple as calling <code>createNotification</code>
-and <code>dismissNotificationById</code> .</p></div>
+and <code>dismissNotificationById</code> . Notifications are assigned IDs which are generated and returned when <code>createNotification</code>
+is called.</p></div>
         
 
         
@@ -301,7 +302,7 @@ and <code>dismissNotificationById</code> .</p></div>
 
   
 
-  <td class="description last"></td>
+  <td class="description last"><p>dispatch function received from Context</p></td>
 </tr>
 
 
@@ -374,7 +375,7 @@ and <code>dismissNotificationById</code> .</p></div>
         <p class="tag-source">
             <a href="utils_Messages.js.html" class="button">View Source</a>
             <span>
-                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line32">line 32</a>
+                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line34">line 34</a>
             </span>
         </p>
     
@@ -421,6 +422,183 @@ and <code>dismissNotificationById</code> .</p></div>
                 
         </div>
     </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~dismissNotificationById">
+        <a class="href-link" href="#~dismissNotificationById">#</a>
+        
+            
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                dismissNotificationById<span class="signature">(dispatch, id)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Removes notification with matching id from <code>state.messages</code></p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>dispatch</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>dispatch function received from Context</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>id</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">String</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>id of notification to be hidden</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="utils_Messages.js.html" class="button">View Source</a>
+            <span>
+                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line53">line 53</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -563,7 +741,7 @@ and <code>dismissNotificationById</code> .</p></div>
 
     
 
-    <td class="description last"><p>notification shows a clickable dismiss button which hides the notification</p></td>
+    <td class="description last"><p>If true, notification shows a clickable dismiss button which hides the notification</p></td>
 </tr>
 
         
@@ -586,7 +764,7 @@ and <code>dismissNotificationById</code> .</p></div>
 
     
 
-    <td class="description last"><p>if true autoHide hides after 3.5s</p></td>
+    <td class="description last"><p>If true autoHide hides after 3.5s</p></td>
 </tr>
 
         
@@ -631,7 +809,7 @@ and <code>dismissNotificationById</code> .</p></div>
         <p class="tag-source">
             <a href="utils_Messages.js.html" class="button">View Source</a>
             <span>
-                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line20">line 20</a>
+                <a href="utils_Messages.js.html">utils/Messages.js</a>, <a href="utils_Messages.js.html#line21">line 21</a>
             </span>
         </p>
     
