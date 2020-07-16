@@ -4,7 +4,8 @@
 
 - [General info](#general-info)
 - [Technologies](#technologies)
-- [Features](#features)
+- [Pages and Features](#pages-and-features)
+- [Documentation](#documentation)
 - [Setup](#setup)
 
 ## General info
@@ -19,23 +20,29 @@ Project was made using:
 - Material UI
 - Formik with Yup validation
 - music-metadata-browser for music file validation
-- react-router for navigation
 - axios
-- react-icons and material icons
+- react-icons
 - Firebase
 - Mongo
 
-## Features
+## Pages and Features
 
 - Beautiful material UI
 - Global Notification system
+- Social + password SignUp/Login
+- Invite user
+
+## Documentation
+
+- [Documentation](https://clearly-outsane.github.io/firebase-mongo-boilerplate/index.html) - Description of various methods and type definitions used in the codebase
+- Medium article series coming soon!
 
 ## Setup
 
 To run this project, clone this repo and then:
 
 ```
-$ cd ../cloned_directory
+$ cd ../firebase-mongo-boilerplate
 $ npm install
 $ npm start
 ```
