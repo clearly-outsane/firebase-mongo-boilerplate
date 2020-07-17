@@ -17,7 +17,7 @@
  * @property {} DISMISS_NOTIFICATION `payload:id` - dispatched by dismissNotificationById in Message.js- avoid dispatching this action directly and only use functions in Message.js
  * @property {} SET_LOADING - `payload : Boolean`- sets `state.loading`
  * @property {} SET_INITIAL_LOAD  - `payload : Boolean`- sets `state.initialLoading`
- * @property {} LOGOUT_USER - Logs out firebase user and sets all user objects and any related user data (such as uploaded singles) to null
+ * @property {} LOGOUT_USER - Logs out firebase user and sets all user objects and any related user data in state (such as uploaded singles) to null
  * @property {} WAIT_SINGLES_SUBMIT - `payload : Boolean`- sets `state.waitSinglesSubmit`
  * @property {} WAIT_ALBUM_SUBMIT - `payload : Boolean`- sets `state.waitSinglesSubmit` //TODO - Seperate this into waitAlbumSubmit
  * @property {} SUBMIT_SINGLES - `payload : body:formData` - calls `Singles.uploadSingle` - passes through {@link middleware}

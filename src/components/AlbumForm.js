@@ -1,34 +1,34 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../state/Store";
-import { Formik, FieldArray, Field, getIn } from "formik";
-import TextField from "@material-ui/core/TextField";
-import { addAlbum, addAlbumSchema } from "../constants/form";
-import Typography from "@material-ui/core/Typography";
-import { DashboardFormStyles } from "../styles/Dashboard";
-import clsx from "clsx";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import { MdClose } from "react-icons/md";
-import { BsPlusSquare } from "react-icons/bs";
-import { IconContext } from "react-icons";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import MomentUtils from "@date-io/moment";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import GenreSelect from "../components/SelectComponents/genreSelect";
-import SecondaryGenreSelect from "../components/SelectComponents/genreSelectSecondary";
-import SingleSelect from "../components/SelectComponents/singleSelect";
-import LanguageSelect from "../components/SelectComponents/languageSelect";
-import { PrimaryButton } from "../styles/theme";
-import ImageIcon from "@material-ui/icons/Image";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { actionTypes } from "../state/constants";
-import { useHistory } from "react-router-dom";
-import { routes } from "../constants";
+import React, { useState, useEffect, useContext } from 'react'
+import { Context } from '../state/Store'
+import { Formik, FieldArray, Field, getIn } from 'formik'
+import TextField from '@material-ui/core/TextField'
+import { addAlbum, addAlbumSchema } from '../constants/form'
+import Typography from '@material-ui/core/Typography'
+import { DashboardFormStyles } from '../styles/Dashboard'
+import clsx from 'clsx'
+import Grid from '@material-ui/core/Grid'
+import IconButton from '@material-ui/core/IconButton'
+import { MdClose } from 'react-icons/md'
+import { BsPlusSquare } from 'react-icons/bs'
+import { IconContext } from 'react-icons'
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import MomentUtils from '@date-io/moment'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
+import GenreSelect from '../components/SelectComponents/genreSelect'
+import SecondaryGenreSelect from '../components/SelectComponents/genreSelectSecondary'
+import SingleSelect from '../components/SelectComponents/singleSelect'
+import LanguageSelect from '../components/SelectComponents/languageSelect'
+import { PrimaryButton } from '../styles/theme'
+import ImageIcon from '@material-ui/icons/Image'
+import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { actionTypes } from '../state/constants'
+import { useHistory } from 'react-router-dom'
+import { routes } from '../constants'
 
 const AddSongForm = () => {
-  const classes = DashboardFormStyles();
+  const classes = DashboardFormStyles()
   return (
     <Formik
       validateOnMount
@@ -37,8 +37,8 @@ const AddSongForm = () => {
     >
       {(props) => <RenderForm {...props} />}
     </Formik>
-  );
-};
+  )
+}
 
 const RenderForm = ({
   values,
@@ -48,133 +48,133 @@ const RenderForm = ({
   handleChange,
   isValid,
   setFieldTouched,
-  setFieldValue,
+  setFieldValue
 }) => {
-  const [state, dispatch] = useContext(Context);
-  const classes = DashboardFormStyles();
-  const history = useHistory();
-  var newDate = new Date();
-  newDate.setDate(newDate.getDate() + 2);
+  const [state, dispatch] = useContext(Context)
+  const classes = DashboardFormStyles()
+  const history = useHistory()
+  var newDate = new Date()
+  newDate.setDate(newDate.getDate() + 2)
 
   useEffect(() => {
-    console.log(values, errors);
-    return () => {};
-  }, [values, errors]);
+    console.log(values, errors)
+    return () => {}
+  }, [values, errors])
 
   const onFormSubmit = (e) => {
-    e.preventDefault();
-    let formData = new FormData();
+    e.preventDefault()
+    const formData = new FormData()
     for (var key in values) {
-      if (key !== "img") formData.append(key, values[key]);
+      if (key !== 'img') formData.append(key, values[key])
     }
-    formData.append("file", values.img);
+    formData.append('file', values.img)
 
     const redirectOnSubmit = () => {
-      history.push(routes.myReleases);
-    };
+      history.push(routes.myReleases)
+    }
 
     dispatch({
       type: actionTypes.SUBMIT_ALBUM,
       payload: {
         body: formData,
-        cb: redirectOnSubmit,
-      },
-    });
-    console.log("Submitted!", values, state.waitSinglesSubmit);
+        cb: redirectOnSubmit
+      }
+    })
+    console.log('Submitted!', values, state.waitSinglesSubmit)
 
-    //submit form api call
-  };
+    // submit form api call
+  }
 
   const change = (name, e) => {
-    e.persist();
-    handleChange(e);
-    setFieldTouched(name, true, false);
-  };
+    e.persist()
+    handleChange(e)
+    setFieldTouched(name, true, false)
+  }
 
   return (
     <>
       <Typography
-        variant="h4"
+        variant='h4'
         gutterBottom
-        align="left"
+        align='left'
         className={clsx(classes.formHeading)}
       >
         Create your album
       </Typography>
-      <Grid container justify="center" alignContent="center">
+      <Grid container justify='center' alignContent='center'>
         <form onSubmit={onFormSubmit} className={clsx(classes.form)}>
           <Typography
-            variant="subtitle1"
-            align="left"
+            variant='subtitle1'
+            align='left'
             className={clsx(classes.formHeading)}
           >
             Identifiers
           </Typography>
-          <Grid container direction="row">
+          <Grid container direction='row'>
             <Grid item xs className={clsx(classes.fieldRightMargin)}>
               <TextField
-                id="albumTitle"
+                id='albumTitle'
                 fullWidth
                 required
-                size="small"
-                label="Album Title"
-                variant="outlined"
+                size='small'
+                label='Album Title'
+                variant='outlined'
                 error={touched.albumTitle && Boolean(errors.albumTitle)}
-                onChange={change.bind(null, "albumTitle")}
+                onChange={change.bind(null, 'albumTitle')}
                 value={values.albumTitle}
                 helperText={
                   touched.albumTitle && errors.albumTitle
                     ? errors.albumTitle
-                    : ""
+                    : ''
                 }
               />
             </Grid>
             <Grid item xs>
               <TextField
-                id="upcCode"
+                id='upcCode'
                 fullWidth
-                type="number"
-                onKeyDown={(evt) => evt.key === "e" && evt.preventDefault()}
-                size="small"
-                label="UPC Code"
-                variant="outlined"
+                type='number'
+                onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+                size='small'
+                label='UPC Code'
+                variant='outlined'
                 error={touched.upcCode && Boolean(errors.upcCode)}
-                onChange={change.bind(null, "upcCode")}
+                onChange={change.bind(null, 'upcCode')}
                 value={values.upcCode}
                 helperText={
                   touched.upcCode && errors.upcCode
                     ? errors.upcCode
-                    : "If left blank one will be autogenerated"
+                    : 'If left blank one will be autogenerated'
                 }
               />
             </Grid>
           </Grid>
-          <Grid container direction="row">
+          <Grid container direction='row'>
             <Grid
               container
-              direction="column"
+              direction='column'
               className={clsx(classes.fieldRightMargin, classes.halfFormField)}
             >
-              <FieldArray name="artists">
+              <FieldArray name='artists'>
                 {({ push, remove }) => (
                   <Grid item>
                     {values.artists.map((artist, index) => {
-                      const name = `artists[${index}]`;
+                      const name = `artists[${index}]`
 
                       return (
                         <div key={index}>
                           <Grid
                             container
-                            direction="row"
+                            direction='row'
                             item
                             className={clsx(classes.formFieldTopMargin)}
                             alignItems={
-                              typeof touched.artists !== "undefined" &&
-                              name === "artists[0]"
+                              typeof touched.artists !== 'undefined' &&
+                              name === 'artists[0]'
                                 ? errors.artists
-                                  ? "flex-start"
-                                  : "center"
-                                : "center"
+                                  ? 'flex-start'
+                                  : 'center'
+                                : 'center'
                             }
                           >
                             <Grid item xs>
@@ -182,22 +182,22 @@ const RenderForm = ({
                                 id={name}
                                 fullWidth
                                 required
-                                size="small"
+                                size='small'
                                 value={artist}
-                                label="Main Artist(s)"
-                                variant="outlined"
+                                label='Main Artist(s)'
+                                variant='outlined'
                                 onChange={change.bind(null, name)}
                                 error={
-                                  touched.artists && name === "artists[0]"
+                                  touched.artists && name === 'artists[0]'
                                     ? Boolean(errors.artists)
                                     : false
                                 }
                                 helperText={
-                                  typeof touched.artists !== "undefined" &&
-                                  name === "artists[0]"
+                                  typeof touched.artists !== 'undefined' &&
+                                  name === 'artists[0]'
                                     ? errors.artists
                                       ? errors.artists
-                                      : ""
+                                      : ''
                                     : null
                                 }
                               />
@@ -205,19 +205,19 @@ const RenderForm = ({
                             <Grid item>
                               {index === 0 ? (
                                 <IconButton
-                                  onClick={() => push("")}
-                                  aria-label="delete"
+                                  onClick={() => push('')}
+                                  aria-label='delete'
                                 >
                                   <BsPlusSquare />
                                 </IconButton>
                               ) : (
                                 <IconButton
                                   onClick={() => remove(index)}
-                                  aria-label="delete"
+                                  aria-label='delete'
                                 >
                                   <IconContext.Provider
                                     value={{
-                                      color: "red",
+                                      color: 'red'
                                     }}
                                   >
                                     <div>
@@ -229,7 +229,7 @@ const RenderForm = ({
                             </Grid>
                           </Grid>
                         </div>
-                      );
+                      )
                     })}
                   </Grid>
                 )}
@@ -238,22 +238,22 @@ const RenderForm = ({
             <Grid
               xs
               container
-              alignItems="center"
+              alignItems='center'
               className={clsx(classes.formFieldTopMargin)}
             >
               <SingleSelect setFieldValue={setFieldValue} />
             </Grid>
           </Grid>
           <Typography
-            variant="subtitle1"
-            align="left"
+            variant='subtitle1'
+            align='left'
             className={clsx(classes.formHeading, classes.formFieldTopMargin)}
           >
             Release
           </Typography>
           <Grid
             container
-            direction="row"
+            direction='row'
             className={classes.formFieldTopMargin}
           >
             <Grid
@@ -262,18 +262,17 @@ const RenderForm = ({
             >
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <DateTimePicker
-                  id="releaseDate"
+                  id='releaseDate'
                   clearable
-                  size="small"
+                  size='small'
                   autoOk
-                  variant="inline"
-                  inputVariant="outlined"
-                  label="Release Date and Time"
+                  variant='inline'
+                  inputVariant='outlined'
+                  label='Release Date and Time'
                   value={values.releaseDate}
-                  InputAdornmentProps={{ position: "end" }}
+                  InputAdornmentProps={{ position: 'end' }}
                   onChange={(value) =>
-                    setFieldValue("releaseDate", value.format())
-                  }
+                    setFieldValue('releaseDate', value.format())}
                   minDate={new Date()}
                   fullWidth
                 />
@@ -282,7 +281,7 @@ const RenderForm = ({
             <Grid
               item
               container
-              justify="space-around"
+              justify='space-around'
               className={clsx(classes.halfFormField)}
             >
               <FormControlLabel
@@ -290,50 +289,50 @@ const RenderForm = ({
                   <Switch
                     checked={values.worldwide}
                     onChange={handleChange}
-                    id="worldwide"
-                    color="primary"
+                    id='worldwide'
+                    color='primary'
                   />
                 }
-                label="Wordwide Release"
+                label='Wordwide Release'
               />
               <FormControlLabel
                 control={
                   <Switch
                     checked={values.previousRelease}
                     onChange={handleChange}
-                    id="previousRelease"
-                    color="primary"
+                    id='previousRelease'
+                    color='primary'
                   />
                 }
-                label="Previously Released"
+                label='Previously Released'
               />
             </Grid>
           </Grid>
           <Typography
-            variant="subtitle1"
-            align="left"
+            variant='subtitle1'
+            align='left'
             className={clsx(classes.formHeading, classes.formFieldTopMargin)}
           >
             Label and genre
           </Typography>
           <Grid
             container
-            direction="row"
+            direction='row'
             className={classes.formFieldTopMargin}
           >
             <Grid item xs className={clsx(classes.fieldRightMargin)}>
               <TextField
-                id="labelName"
+                id='labelName'
                 fullWidth
                 required
-                size="small"
-                label="Label"
-                variant="outlined"
+                size='small'
+                label='Label'
+                variant='outlined'
                 error={touched.labelName && Boolean(errors.labelName)}
-                onChange={change.bind(null, "labelName")}
+                onChange={change.bind(null, 'labelName')}
                 value={values.labelName}
                 helperText={
-                  touched.labelName && errors.labelName ? errors.labelName : ""
+                  touched.labelName && errors.labelName ? errors.labelName : ''
                 }
               />
             </Grid>
@@ -345,7 +344,7 @@ const RenderForm = ({
                 helperText={
                   touched.primaryGenre && errors.primaryGenre
                     ? errors.primaryGenre
-                    : ""
+                    : ''
                 }
                 setFieldTouched={setFieldTouched}
               />
@@ -358,24 +357,24 @@ const RenderForm = ({
                 helperText={
                   touched.secondaryGenre && errors.secondaryGenre
                     ? errors.secondaryGenre
-                    : ""
+                    : ''
                 }
                 setFieldTouched={setFieldTouched}
               />
             </Grid>
           </Grid>
           <Typography
-            variant="subtitle1"
-            align="left"
+            variant='subtitle1'
+            align='left'
             className={clsx(classes.formHeading, classes.formFieldTopMargin)}
           >
             Content details
           </Typography>
           <Grid
             container
-            direction="row"
+            direction='row'
             className={classes.formFieldTopMargin}
-            justify="space-around"
+            justify='space-around'
           >
             <Grid item className={clsx(classes.fieldRightMargin)}>
               <FormControlLabel
@@ -383,11 +382,11 @@ const RenderForm = ({
                   <Switch
                     checked={values.explicit}
                     onChange={handleChange}
-                    id="explicit"
-                    color="primary"
+                    id='explicit'
+                    color='primary'
                   />
                 }
-                label="Explicit"
+                label='Explicit'
               />
             </Grid>
             <Grid item xs className={clsx(classes.fieldRightMargin)}>
@@ -396,100 +395,100 @@ const RenderForm = ({
                 setFieldValue={setFieldValue}
                 error={touched.language && Boolean(errors.language)}
                 helperText={
-                  touched.language && errors.language ? errors.language : ""
+                  touched.language && errors.language ? errors.language : ''
                 }
                 setFieldTouched={setFieldTouched}
               />
             </Grid>
             <Grid item xs>
               <TextField
-                id="recordingLocation"
+                id='recordingLocation'
                 fullWidth
                 required
-                size="small"
-                label="Recording Location"
-                variant="outlined"
+                size='small'
+                label='Recording Location'
+                variant='outlined'
                 error={
                   touched.recordingLocation && Boolean(errors.recordingLocation)
                 }
-                onChange={change.bind(null, "recordingLocation")}
+                onChange={change.bind(null, 'recordingLocation')}
                 value={values.recordingLocation}
                 helperText={
                   touched.recordingLocation && errors.recordingLocation
                     ? errors.recordingLocation
-                    : ""
+                    : ''
                 }
               />
             </Grid>
           </Grid>
           <Grid
             container
-            direction="row"
+            direction='row'
             className={classes.formFieldTopMargin}
           >
             <Grid item className={clsx(classes.fieldRightMargin)}>
-              <Grid container alignItems="center" direction="column">
+              <Grid container alignItems='center' direction='column'>
                 <Grid item>
                   <input
-                    accept="image/jpg,image/jpeg,image/png"
+                    accept='image/jpg,image/jpeg,image/png'
                     className={classes.uploadImage}
-                    id="uploadCoverArt"
-                    type="file"
+                    id='uploadCoverArt'
+                    type='file'
                     onChange={(event) => {
-                      setFieldValue("img", event.currentTarget.files[0]);
+                      setFieldValue('img', event.currentTarget.files[0])
                     }}
                   />
-                  <label htmlFor="uploadCoverArt">
+                  <label htmlFor='uploadCoverArt'>
                     <Button
-                      variant="contained"
-                      color="primary"
+                      variant='contained'
+                      color='primary'
                       className={classes.uploadImageButton}
                       startIcon={<ImageIcon />}
-                      component="span"
+                      component='span'
                     >
-                      {!!values.img && "name" in values.img
+                      {!!values.img && 'name' in values.img
                         ? values.img.name
-                        : "Upload Cover Art"}
+                        : 'Upload Cover Art'}
                     </Button>
                   </label>
                 </Grid>
                 <Grid item>
                   <Typography
-                    variant="body1"
-                    align="left"
+                    variant='body1'
+                    align='left'
                     className={clsx(classes.uploadHelperText)}
                   >
-                    {!!values.img && errors.img ? errors.img : ""}
+                    {!!values.img && errors.img ? errors.img : ''}
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-          <Grid container spacing={0} justify="flex-end" alignItems="center">
+          <Grid container spacing={0} justify='flex-end' alignItems='center'>
             <PrimaryButton
-              color="primary"
+              color='primary'
               disableElevation
-              variant="contained"
+              variant='contained'
               classes={{ root: classes.formFieldTopMargin }}
-              size="large"
-              type="submit"
+              size='large'
+              type='submit'
               disabled={!isValid}
             >
               {state.waitSinglesSubmit ? (
                 <CircularProgress
-                  color="secondary"
+                  color='secondary'
                   size={28}
                   className={classes.fabProgress}
                 />
               ) : (
-                "Submit"
+                'Submit'
               )}
             </PrimaryButton>
           </Grid>
         </form>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default AddSongForm;
+export default AddSongForm

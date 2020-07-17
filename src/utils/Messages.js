@@ -6,16 +6,16 @@
  * @category Features
  */
 
-import React, { useEffect, useState, useContext } from "react";
-import { Context } from "../state/Store";
-import { routes } from "../constants";
-import { Redirect } from "react-router-dom";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-import { actionTypes } from "../state/constants";
+import React, { useEffect, useState, useContext } from 'react'
+import { Context } from '../state/Store'
+import { routes } from '../constants'
+import { Redirect } from 'react-router-dom'
+import Snackbar from '@material-ui/core/Snackbar'
+import MuiAlert from '@material-ui/lab/Alert'
+import { actionTypes } from '../state/constants'
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
+function Alert (props) {
+  return <MuiAlert elevation={6} variant='filled' {...props} />
 }
 
 /**
@@ -42,13 +42,13 @@ function Alert(props) {
  * @function createNotification
  */
 export const createNotification = (state, dispatch, notification) => {
-  const notifId = `${notification.type}-${state.messages.length}`;
+  const notifId = `${notification.type}-${state.messages.length}`
   dispatch({
     type: actionTypes.CREATE_NOTIFICATION,
-    payload: { ...notification, id: notifId },
-  });
-  return notifId;
-};
+    payload: { ...notification, id: notifId }
+  })
+  return notifId
+}
 
 /**
  * Removes notification with matching id from `state.messages`
@@ -58,36 +58,36 @@ export const createNotification = (state, dispatch, notification) => {
  * @function dismissNotificationById
  */
 export const dismissNotificationById = (dispatch, id) => {
-  dispatch({ type: actionTypes.DISMISS_NOTIFICATION, payload: id });
-};
+  dispatch({ type: actionTypes.DISMISS_NOTIFICATION, payload: id })
+}
 
 const RenderMessages = () => {
-  const [state, dispatch] = useContext(Context);
-  //local state holding state.messages
+  const [state, dispatch] = useContext(Context)
+  // local state holding state.messages
   const [m, setM] = useState([
-    { id: 1, message: "", type: "info", isDismissible: true },
-  ]);
+    { id: 1, message: '', type: 'info', isDismissible: true }
+  ])
 
   useEffect(() => {
-    setM(state.messages);
+    setM(state.messages)
     // console.log(m);
-    return () => {};
-  }, [state.messages, m]);
+    return () => {}
+  }, [state.messages, m])
 
   const handleClose = (id) => {
-    //remove the mssg from state
-    dismissNotificationById(dispatch, id);
-  };
+    // remove the mssg from state
+    dismissNotificationById(dispatch, id)
+  }
 
   const RenderMessages = () => {
-    var messagesToRender = [];
+    var messagesToRender = []
     m.map((message) => {
-      //position messages on screen based on their type
+      // position messages on screen based on their type
       const vertical =
-        message.type === "error" || message.type === "warning"
-          ? "top"
-          : "bottom";
-      const horizontal = message.type === "error" ? "right" : "center";
+        message.type === 'error' || message.type === 'warning'
+          ? 'top'
+          : 'bottom'
+      const horizontal = message.type === 'error' ? 'right' : 'center'
 
       messagesToRender.push(
         <>
@@ -112,12 +112,12 @@ const RenderMessages = () => {
             </Alert>
           </Snackbar>
         </>
-      );
-    });
-    return messagesToRender;
-  };
+      )
+    })
+    return messagesToRender
+  }
 
-  return <>{m ? RenderMessages() : null}</>;
-};
+  return <>{m ? RenderMessages() : null}</>
+}
 
-export default RenderMessages;
+export default RenderMessages

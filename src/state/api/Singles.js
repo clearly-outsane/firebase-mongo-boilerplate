@@ -4,10 +4,10 @@
  * @category API
  */
 
-import axios from "axios";
-import React from "react";
-import { createNotification } from "../../utils/Messages";
-import { actionTypes } from "../constants";
+import axios from 'axios'
+import React from 'react'
+import { createNotification } from '../../utils/Messages'
+import { actionTypes } from '../constants'
 
 /**
  *
@@ -21,38 +21,38 @@ import { actionTypes } from "../constants";
 const uploadSingle = async (state, dispatch, body) => {
   try {
     const response = await axios.post(
-      `http://localhost:3000/api/v1/singles`,
+      'http://localhost:3000/api/v1/singles',
       body,
       {
         onUploadProgress: (progress) => {
-          const { loaded, total } = progress;
-          const percentageProgress = Math.floor((loaded / total) * 100);
-          //TODO dispatch(setUploadProgress(file.id, percentageProgress))
-        },
+          const { loaded, total } = progress
+          const percentageProgress = Math.floor((loaded / total) * 100)
+          // TODO dispatch(setUploadProgress(file.id, percentageProgress))
+        }
       }
-    );
-    console.log(response);
+    )
+    console.log(response)
     createNotification(state, dispatch, {
-      type: "success",
+      type: 'success',
       autoHide: true,
-      message: "Successfully uploaded",
-    });
-    return response.data;
+      message: 'Successfully uploaded'
+    })
+    return response.data
   } catch (e) {
-    console.log(e, e.response);
+    console.log(e, e.response)
     const errorMsg =
-      typeof e.response.data !== "undefined"
+      typeof e.response.data !== 'undefined'
         ? e.response.data.msg
-        : "Oops! Something went wrong";
+        : 'Oops! Something went wrong'
 
     createNotification(state, dispatch, {
-      type: "error",
+      type: 'error',
       autoHide: true,
-      message: <div>{errorMsg}</div>,
-    });
-    return null;
+      message: <div>{errorMsg}</div>
+    })
+    return null
   }
-};
+}
 
 /**
  * Once a single has been uploaded it has to be associated the user that uploaded it.
@@ -67,15 +67,15 @@ const updateUser = async (state, dispatch, singleId) => {
   try {
     const response = await axios.post(
       `http://localhost:3000/api/v1/users/single/${state.firebaseUser.uid}/${singleId}`
-    );
+    )
 
-    return response.data;
+    return response.data
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
-};
+}
 
 export default {
   uploadSingle,
-  updateUser,
-};
+  updateUser
+}

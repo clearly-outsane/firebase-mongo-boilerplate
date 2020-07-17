@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { Context } from "../state/Store";
 import LandingNavbar from "../components/LandingNavbar";
 import Step1 from "../components/SignUpForm/Step1";
@@ -10,7 +10,7 @@ import { LeftPaneFormStyles } from "../styles/Form";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
+
 import { pages, routes, countries } from "../constants";
 import { Formik } from "formik";
 import clsx from "clsx";
@@ -27,8 +27,8 @@ import {
   oneLastStep,
   oneLastStepSchema,
 } from "../constants/form";
-import RenderMessages from "../utils/Messages";
 import { createNotification, dismissNotificationById } from "../utils/Messages";
+
 import SelectInput from "@material-ui/core/Select/SelectInput";
 import { actionTypes } from "../state/constants";
 
@@ -81,21 +81,21 @@ export const SignUp = ({ location }) => {
   };
 
   useEffect(() => {
-    //Warn the user to finish sign up if their mongo user isn't created yet
-    //Also check if a notifId already exists before creating a new notification
+    // Warn the user to finish sign up if their mongo user isn't created yet
+    // Also check if a notifId already exists before creating a new notification
     if (state.firebaseUser && !state.user && !state.loading) {
-      const nId = notifId
-        ? notifId
-        : createNotification(state, dispatch, {
-            isDismissible: true,
-            message: <div>Complete the sign up form to gain full access</div>,
-            type: "warning",
-          });
+      const nId =
+        notifId ||
+        createNotification(state, dispatch, {
+          isDismissible: true,
+          message: <div>Complete the sign up form to gain full access</div>,
+          type: "warning",
+        });
 
       setNotifId(nId);
     }
     return () => {
-      //cleanup - remove any notif if component unmounts
+      // cleanup - remove any notif if component unmounts
       notifId
         ? dismissNotificationById(dispatch, notifId)
         : console.log("no notifs", notifId);

@@ -1,4 +1,4 @@
-# Firebase + Mongo authentication using React hooks
+# Asset Distro React App
 
 ## Table of contents
 
@@ -61,13 +61,6 @@ firebase-mongo-boilerplate
 | styles          | Files related to styling such as CSS files and Material UI theme providers                                                                                          |
 | utils           | Extra features for the app that improve user experience. Currently only contains logic for the global notification system.                                          |
 
-## Pages and Features
-
-- Beautiful material UI
-- Global Notification system
-- Social + password SignUp/Login
-- Invite user
-
 ## Documentation
 
 - [Documentation](https://clearly-outsane.github.io/firebase-mongo-boilerplate/index.html) - Description of various methods and type definitions used in the codebase
@@ -75,10 +68,11 @@ firebase-mongo-boilerplate
 
 ## Setup
 
+Project was made using [create-react-app](https://github.com/facebook/create-react-app)  
 To run this project, clone this repo and then:
 
 ```
-$ cd ../firebase-mongo-boilerplate
+$ cd ../cloned_directory
 $ npm install
 $ npm start
 ```

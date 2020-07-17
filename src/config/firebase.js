@@ -1,6 +1,6 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
 
 /**
  * @ignore
@@ -9,23 +9,23 @@ import "firebase/firestore";
  * and anyone can see it in the client side code
  */
 const firebaseConfig = {
-  apiKey: "AIzaSyBGoLb_ns1TLOOuwa2FuhobO5rdJi8aQeA",
-  authDomain: "website-cf1d6.firebaseapp.com",
-  databaseURL: "https://website-cf1d6.firebaseio.com",
-  projectId: "website-cf1d6",
-  storageBucket: "website-cf1d6.appspot.com",
-  messagingSenderId: "351562932165",
-  appId: "1:351562932165:web:8d269c10a2907a0251b5ac",
-  measurementId: "G-N7TTPGFWV0",
-};
+  apiKey: 'AIzaSyBGoLb_ns1TLOOuwa2FuhobO5rdJi8aQeA',
+  authDomain: 'website-cf1d6.firebaseapp.com',
+  databaseURL: 'https://website-cf1d6.firebaseio.com',
+  projectId: 'website-cf1d6',
+  storageBucket: 'website-cf1d6.appspot.com',
+  messagingSenderId: '351562932165',
+  appId: '1:351562932165:web:8d269c10a2907a0251b5ac',
+  measurementId: 'G-N7TTPGFWV0'
+}
 
-firebase.initializeApp(firebaseConfig);
-firebase.auth().useDeviceLanguage(); //Sets language to browser default
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+firebase.initializeApp(firebaseConfig)
+firebase.auth().useDeviceLanguage() // Sets language to browser default
+export const auth = firebase.auth()
+export const firestore = firebase.firestore()
 
-export const googleProvider = new firebase.auth.GoogleAuthProvider();
-export const facebookProvider = new firebase.auth.FacebookAuthProvider();
+export const googleProvider = new firebase.auth.GoogleAuthProvider()
+export const facebookProvider = new firebase.auth.FacebookAuthProvider()
 
 /**
  * TODO - handle user logging in through another sign in

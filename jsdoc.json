@@ -16,7 +16,7 @@
   },
   "templates": {
     "better-docs": {
-      "name": "Firebase+Mongo boilerplate"
+      "name": "Asset Distro"
     },
     "monospaceLinks": true,
     "cleverLinks": "true"

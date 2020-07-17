@@ -44,7 +44,7 @@
             
              
                 <a href="index.html">
-                    <h1 class="navbar-item">Firebase+Mongo boilerplate</h1>
+                    <h1 class="navbar-item">Asset Distro</h1>
                 </a>
             
         </div>
@@ -96,12 +96,12 @@
  * @category Store
  */
 
-import React, { createContext, useReducer, useEffect, useState } from "react";
-import { auth } from "../config/firebase";
-import Reducer from "./reducers";
-import { actionTypes } from "../state/constants";
-import { User, Singles, Albums } from "./api";
-import { routes } from "../constants";
+import React, { createContext, useReducer, useEffect, useState } from 'react'
+import { auth } from '../config/firebase'
+import Reducer from './reducers'
+import { actionTypes } from '../state/constants'
+import { User, Singles, Albums } from './api'
+import { routes } from '../constants'
 
 /**
  * The initial state.
@@ -133,8 +133,8 @@ const initialState = {
   loading: true,
   initialLoading: true,
   waitSinglesSubmit: false,
-  formLoading: false,
-};
+  formLoading: false
+}
 
 /**
  * Creates a higher-order store that applies middleware to the dispatch method
@@ -146,20 +146,20 @@ const initialState = {
  *
  * @see module:Actions
  */
-function dispatchUserMiddleware(state, dispatch) {
+function dispatchUserMiddleware (state, dispatch) {
   return (action) => {
-    console.log(action);
+    console.log(action)
     switch (action.type) {
       case actionTypes.CREATE_USER:
         User.createUser(state, dispatch, action.payload.body, (user) => {
-          if (user &amp;&amp; user !== "handled") {
-            //If user was successfully created - send them a verification email
+          if (user &amp;&amp; user !== 'handled') {
+            // If user was successfully created - send them a verification email
 
-            dispatch({ type: actionTypes.CREATE_USER, user });
-          } else if (user === "handled") console.log("Done Loading");
-          else dispatch({ type: actionTypes.SET_LOADING, payload: false });
-        });
-        break;
+            dispatch({ type: actionTypes.CREATE_USER, user })
+          } else if (user === 'handled') console.log('Done Loading')
+          else dispatch({ type: actionTypes.SET_LOADING, payload: false })
+        })
+        break
 
       case actionTypes.LOGIN_USER:
         User.signInUser(
@@ -168,79 +168,79 @@ function dispatchUserMiddleware(state, dispatch) {
           dispatch,
           action.body,
           (user) => {
-            if (user) dispatch({ type: actionTypes.LOGIN_USER, user });
+            if (user) dispatch({ type: actionTypes.LOGIN_USER, user })
             else {
-              console.log("mongo user doesnt exists");
-              dispatch({ type: actionTypes.SET_LOADING, payload: false });
+              console.log('mongo user doesnt exists')
+              dispatch({ type: actionTypes.SET_LOADING, payload: false })
             }
           }
-        );
-        break;
+        )
+        break
 
       case actionTypes.GET_MONGO_USER:
         User.getUserbyId(state, dispatch, action.id, (user) => {
-          if (user) dispatch({ type: actionTypes.LOGIN_USER, user });
-          else dispatch({ type: actionTypes.SET_LOADING, payload: false });
-          dispatch({ type: actionTypes.SET_INITIAL_LOAD, payload: false });
-        });
-        break;
+          if (user) dispatch({ type: actionTypes.LOGIN_USER, user })
+          else dispatch({ type: actionTypes.SET_LOADING, payload: false })
+          dispatch({ type: actionTypes.SET_INITIAL_LOAD, payload: false })
+        })
+        break
 
       case actionTypes.SUBMIT_SINGLES:
         dispatch({
           type: actionTypes.WAIT_SINGLES_SUBMIT,
-          payload: true,
-        });
+          payload: true
+        })
         Singles.uploadSingle(state, dispatch, action.payload.body).then(
           (single) => {
-            !!single
+            single
               ? Singles.updateUser(state, dispatch, single._id).then((user) => {
-                  dispatch({ type: actionTypes.LOGIN_USER, user });
-                  dispatch({
-                    type: actionTypes.WAIT_SINGLES_SUBMIT,
-                    payload: false,
-                  });
-                  action.payload.cb(); //Redirect after everything is successful (cb is a redirect function)
-                })
-              : dispatch({
+                dispatch({ type: actionTypes.LOGIN_USER, user })
+                dispatch({
                   type: actionTypes.WAIT_SINGLES_SUBMIT,
-                  payload: false,
-                });
+                  payload: false
+                })
+                action.payload.cb() // Redirect after everything is successful (cb is a redirect function)
+              })
+              : dispatch({
+                type: actionTypes.WAIT_SINGLES_SUBMIT,
+                payload: false
+              })
           }
-        );
-        break;
+        )
+        break
 
       case actionTypes.SUBMIT_ALBUM:
         dispatch({
           type: actionTypes.WAIT_ALBUM_SUBMIT,
-          payload: true,
-        });
+          payload: true
+        })
         Albums.uploadAlbum(state, dispatch, action.payload.body).then(
           (album) => {
-            !!album
+            album
               ? Albums.updateUser(state, dispatch, album._id).then((user) => {
-                  dispatch({ type: actionTypes.LOGIN_USER, user });
-                  dispatch({
-                    type: actionTypes.WAIT_ALBUM_SUBMIT,
-                    payload: false,
-                  });
-                  action.payload.cb();
-                })
-              : dispatch({
+                dispatch({ type: actionTypes.LOGIN_USER, user })
+                dispatch({
                   type: actionTypes.WAIT_ALBUM_SUBMIT,
-                  payload: false,
-                });
+                  payload: false
+                })
+                action.payload.cb()
+              })
+              : dispatch({
+                type: actionTypes.WAIT_ALBUM_SUBMIT,
+                payload: false
+              })
           }
-        );
-        break;
+        )
+        break
 
       case actionTypes.SEND_INVITE_EMAIL:
-        User.sendInviteEmail(state, dispatch, action.payload);
-        break;
+        User.sendInviteEmail(state, dispatch, action.payload)
+        break
 
       default:
-        return dispatch(action);
+        return dispatch(action)
     }
-  };
+  }
 }
 
 /**
@@ -252,51 +252,51 @@ function dispatchUserMiddleware(state, dispatch) {
  * @param {ReactElement} children Functional components that want to consume Context state and dispatch actions
  */
 const Store = ({ children }) => {
-  const [firebaseUser, setUser] = useState(null);
+  const [firebaseUser, setUser] = useState(null)
 
-  const [contextState, dispatch] = useReducer(Reducer, initialState);
-  const state = { ...contextState, firebaseUser };
-  const middleware = dispatchUserMiddleware(state, dispatch);
-  //Listens to changes in user auth state.
+  const [contextState, dispatch] = useReducer(Reducer, initialState)
+  const state = { ...contextState, firebaseUser }
+  const middleware = dispatchUserMiddleware(state, dispatch)
+  // Listens to changes in user auth state.
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        setUser(authUser);
-        console.log("Firebase user:", authUser, authUser.providerData);
+        setUser(authUser)
+        console.log('Firebase user:', authUser, authUser.providerData)
       } else {
-        console.log("No Firebase user");
-        setUser(null);
-        middleware({ type: actionTypes.SET_LOADING, payload: false });
-        middleware({ type: actionTypes.SET_INITIAL_LOAD, payload: false });
+        console.log('No Firebase user')
+        setUser(null)
+        middleware({ type: actionTypes.SET_LOADING, payload: false })
+        middleware({ type: actionTypes.SET_INITIAL_LOAD, payload: false })
       }
-    });
-    return () => {};
-  }, []);
-  //Listens to changes in firebase user and accordingly syncs the mongo user
+    })
+    return () => {}
+  }, [])
+  // Listens to changes in firebase user and accordingly syncs the mongo user
   useEffect(() => {
     if (firebaseUser) {
       if (!!state.user &amp;&amp; firebaseUser.email !== state.user.email) {
-        console.log("user changed");
-        //If user and firebaseUser emails don't match - refetch them
-        middleware({ type: actionTypes.LOGOUT_USER });
-        middleware({ type: actionTypes.GET_MONGO_USER, id: firebaseUser.uid });
+        console.log('user changed')
+        // If user and firebaseUser emails don't match - refetch them
+        middleware({ type: actionTypes.LOGOUT_USER })
+        middleware({ type: actionTypes.GET_MONGO_USER, id: firebaseUser.uid })
       }
-      console.log("here", state);
+      console.log('here', state)
       if (state.initialLoading) {
-        middleware({ type: actionTypes.GET_MONGO_USER, id: firebaseUser.uid });
+        middleware({ type: actionTypes.GET_MONGO_USER, id: firebaseUser.uid })
       }
     }
-  }, [firebaseUser]);
+  }, [firebaseUser])
 
   return (
     &lt;Context.Provider value={[state, dispatchUserMiddleware(state, dispatch)]}>
       {children}
     &lt;/Context.Provider>
-  );
-};
+  )
+}
 
-export const Context = createContext(initialState);
-export default { Store };
+export const Context = createContext(initialState)
+export default { Store }
 </code></pre>
         </article>
     </section>

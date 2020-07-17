@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
-import { ReactComponent as SingleSvg } from "../assets/svgs/singleCard.svg";
-import LandingNavbar from "../components/LandingNavbar";
-import { LandingStyles } from "../styles/Landing";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import { PrimaryButton } from "../styles/theme";
-import { Link } from "react-router-dom";
-import clsx from "clsx";
+import React, { useContext } from 'react'
+import { ReactComponent as SingleSvg } from '../assets/svgs/singleCard.svg'
+import LandingNavbar from '../components/LandingNavbar'
+import { LandingStyles } from '../styles/Landing'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import { PrimaryButton } from '../styles/theme'
+import { Link } from 'react-router-dom'
+import clsx from 'clsx'
 
 export const Landing = () => {
-  const classes = LandingStyles();
+  const classes = LandingStyles()
 
   return (
     <div className={classes.root}>
@@ -23,16 +23,16 @@ export const Landing = () => {
         <Grid item xs={12} sm={6}>
           <Grid
             container
-            direction="column"
-            justify="center"
-            alignItems="center"
+            direction='column'
+            justify='center'
+            alignItems='center'
             classes={{ container: classes.leftGridContainer }}
           >
             <Grid item className={clsx(classes.TextContainer)}>
               <Typography
-                variant="h2"
+                variant='h2'
                 gutterBottom
-                align="center"
+                align='center'
                 className={classes.HeadingText}
               >
                 Release your music to the world.
@@ -40,8 +40,8 @@ export const Landing = () => {
             </Grid>
             <Grid item className={clsx(classes.TextContainer)}>
               <Typography
-                variant="subtitle1"
-                align="center"
+                variant='subtitle1'
+                align='center'
                 classes={{ root: classes.SmallerTextContainer }}
               >
                 Tap into all major music platforms in a click. See where your
@@ -52,18 +52,18 @@ export const Landing = () => {
 
             <Grid
               container
-              direction="column"
-              justify="center"
-              alignItems="center"
+              direction='column'
+              justify='center'
+              alignItems='center'
               className={clsx(classes.LargeSignUpButtonContainer)}
             >
-              <Link to="/SignUp" style={{ textDecoration: "none" }}>
+              <Link to='/SignUp' style={{ textDecoration: 'none' }}>
                 <PrimaryButton
-                  color="primary"
+                  color='primary'
                   disableElevation
-                  variant="contained"
+                  variant='contained'
                   classes={{ root: classes.LargeSignUpButton }}
-                  size="large"
+                  size='large'
                 >
                   Get started
                 </PrimaryButton>
@@ -75,9 +75,9 @@ export const Landing = () => {
           <div className={classes.imageContainer}>
             <Grid
               container
-              alignItems="center"
-              justify="center"
-              style={{ height: "100vh" }}
+              alignItems='center'
+              justify='center'
+              style={{ height: '100vh' }}
             >
               <SingleSvg />
             </Grid>
@@ -85,7 +85,7 @@ export const Landing = () => {
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default Landing;
+export default Landing

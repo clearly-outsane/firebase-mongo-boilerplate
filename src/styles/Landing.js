@@ -17,16 +17,10 @@ export const LandingStyles = makeStyles((theme) => ({
   },
   leftGridContainer: { height: "100%" },
   coloredPane: {
-    // backgroundColor: theme.palette.primary.faded,
-    // borderTopLeftRadius: 48,
-    // borderBottomLeftRadius: 48,
-    //For: Image in the center
-    // backgroundImage: `url(${landingImage})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     // backgroundOrigin: "content-box",
-    // padding: 124,
     backgroundImage: `url(${landingImage})`,
   },
   imageContainer: {
